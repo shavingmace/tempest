@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from jsonrpc import jsonrpc_method
-
+from django.http import JsonResponse
 
 
 # Create your views here.
@@ -12,13 +11,9 @@ def test(req):
 def index(req):
     return HttpResponse("안녕 템페스트")
 
-
-
-@jsonrpc_method('test', authenticated=False, safe=False, validate=False)
-def testit(req):
-    print('rpc 호출')
-    print(req)
-    data = {
-        'name': "난 통신할 거야"
-    }
-    return data
+def jsontest(req):
+    j = {'함성': '우하하',
+         '동물': '쥐',
+         "음식": '치즈'}
+    print(f"json test 시작")
+    return JsonResponse(j, safe=False, json_dumps_params={'ensure_ascii': False})

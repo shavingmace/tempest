@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'tempest.apps.TempestConfig',
     'common.apps.CommonConfig',
-    'django-json-rpc.jsonrpc',
 ]
 
 MIDDLEWARE = [
