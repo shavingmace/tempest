@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-imwoxfdwe9(orby*2_u)%3af(=!ftb&kab8xrb=4^s2=@$t-b)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'tempest.apps.TempestConfig',
     'common.apps.CommonConfig',
+    'django-json-rpc.jsonrpc',
 ]
 
 MIDDLEWARE = [
