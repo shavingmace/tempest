@@ -62,14 +62,14 @@ def get_sp_wthr():
     key='jQGK6Krekt13IVsRLG8PI6pQf+jjzIQjGY2KNi4n6iX9y4Rnl3dd6GVesutZTLvmUNjjy4L6oNmJECojps97JA=='
     url='http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst' # 뒤에 / 붙이지 말 것!!!!!!!!!!!!
     date = get_date()
-    time = '0500'
+    base_time = ['0200', '0500', '0800', '1100', '1400', '1700', '2000', '2300'] #(1일 8회)
     params = {
             'serviceKey':  key, # 서비스코드
             'pageNo': '1', # 페이지번호
             'numOfRows':'100', # 한페이지 결과수
             'dataType': 'JSON', # 응답자료형식
             'base_date': date,  # 기반날짜
-            'base_time': time,  # 기반 시간
+            'base_time': base_time[1],  # 기반 시간
             'nx': 55, # 예보지점 x좌표, 문자열로 보낼 것!!!
             'ny': 127 # 예보지점 y좌표
             }
