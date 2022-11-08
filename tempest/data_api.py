@@ -1,6 +1,25 @@
 import requests as reqs
+import time as tm
 
-def get_wthr(date):
+def get_date():
+     #local time => lt
+    lt = tm.localtime(tm.time())
+    mon = str(lt.tm_mon)
+    day = str(lt.tm_mday)
+    if len(mon)<2:
+        mon = '0'+mon
+    if len(day)<2:
+        day = '0'+day
+    date = f'{lt.tm_year}{mon}{day}'
+    return date
+
+def get_time():
+    lt = tm.localtime(tm.time())
+    hour = str(lt.tm_hour)
+    if len(hour)<2: hour = '0'+hour
+    return hour + '00'
+
+def get_past_wthr(date=get_date()):
     key='jQGK6Krekt13IVsRLG8PI6pQf+jjzIQjGY2KNi4n6iX9y4Rnl3dd6GVesutZTLvmUNjjy4L6oNmJECojps97JA=='
     url='http://apis.data.go.kr/1360000/AsosDalyInfoService/getWthrDataList'
     params = {
@@ -16,3 +35,47 @@ def get_wthr(date):
             }
     res = reqs.get(url, params=params, timeout=10)
     return res.json()['response']['body']['items']['item'][0]
+
+def get_past_wthr_sum(date=get_date):
+    res = get_past_wthr(date)
+    result = {
+        '관측지점번호': res['stnId'],
+        '관측지점이름': res['stnNm'],
+        '기상현상': res['iscs'],
+        '평균기온': res['avgTa'],
+        '최저기온': res['minTa'],
+        '최저기온시간': res['minTaHrmt'],
+        '최고기온': res['maxTa'],
+        '최고기온시간': res['maxTaHrmt'],
+        '일강수량': res['sumRn'],
+        '평균풍속': res['avgWs'],
+        '평균상대습도': res['avgRhm']
+    }
+    return result
+
+
+
+def get_sp_wthr():
+    """_summary_
+    단기 기상 예보 데이터 호출 
+    """
+    key='jQGK6Krekt13IVsRLG8PI6pQf+jjzIQjGY2KNi4n6iX9y4Rnl3dd6GVesutZTLvmUNjjy4L6oNmJECojps97JA=='
+    url='http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst' # 뒤에 / 붙이지 말 것!!!!!!!!!!!!
+    date = get_date()
+    time = '0500'
+    params = {
+            'serviceKey':  key, # 서비스코드
+            'pageNo': '1', # 페이지번호
+            'numOfRows':'100', # 한페이지 결과수
+            'dataType': 'JSON', # 응답자료형식
+            'base_date': date,  # 기반날짜
+            'base_time': time,  # 기반 시간
+            'nx': 55, # 예보지점 x좌표, 문자열로 보낼 것!!!
+            'ny': 127 # 예보지점 y좌표
+            }
+    #print(f'debug: params: {params}')
+    res = reqs.get(url, params=params, timeout=20)
+    #print(f'debug: res: {res}')
+    #print(f'\t{res.json()}')
+    return res.json()['response']['body']['items']['item']
+    

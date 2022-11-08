@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.http import JsonResponse
-from .data_api import get_wthr
+from .data_api import *
 
 # Create your views here.
 
@@ -28,11 +28,22 @@ def jsontest(req):
     return JsonResponse(j, safe=False, json_dumps_params={'ensure_ascii': False})
 
 
-def show_wthr(req, date):
+def show_past_wthr(req, date=get_date()):
     try:
-        res_json = get_wthr(date)
+        # res_json = get_wthr(date)
+        res_json = get_past_wthr_sum(date)
+        print(f'\tdebug: 평균기온: {res_json["평균기온"]}')
     except Exception as e:
-        print(f'@show_wthr에서 Error 발생:\n\t {e}')
+        print(f'\tdebug: @show_wthr에서 Error 발생:\n\t {e}')
         res_json = {"msg": '오류가 있습니다.'}
+    print(get_date())
     
+    return JsonResponse(res_json, safe=False, json_dumps_params={'ensure_ascii': False})
+
+def show_current_wthr(req):
+    res_json={}
+    try:
+        res_json = get_sp_wthr()
+    except Exception as e:
+        print(f'\t오류: {e}')
     return JsonResponse(res_json, safe=False, json_dumps_params={'ensure_ascii': False})
