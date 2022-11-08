@@ -15,4 +15,4 @@ def get_wthr(date):
             'stnIds': '108'  # 종관기상관측 지점 번호 (108 서울)
             }
     res = reqs.get(url, params=params, timeout=10)
-    return res.json()
+    return res.json()['response']['body']['items']['item'][0]
