@@ -29,5 +29,9 @@ def jsontest(req):
 
 
 def show_wthr(req, date):
-    res_json = get_wthr(date)
+    try:
+        res_json = get_wthr(date)
+    except Exception as e:
+        print(f'@show_wthr에서 Error 발생:\n\t {e}')
+        res_json = {"msg": '오류가 있습니다.'}
     return JsonResponse(res_json, safe=False, json_dumps_params={'ensure_ascii': False})
