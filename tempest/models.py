@@ -17,12 +17,15 @@ class Weather(models.Model):
 # top, outer, bottom, onepiece, shoes, headwear
 class Clothing_top(models.Model):
     name = models.CharField(max_length=10)
+    def __str__(self): return self.name
     
 class Clothing_outer(models.Model):
     name = models.CharField(max_length=10)
+    def __str__(self): return self.name
 
 class Clothing_bottom(models.Model):
     name = models.CharField(max_length=10)
+    def __str__(self): return self.name
         
         
 # 피복 기록 
@@ -35,4 +38,3 @@ class ClotheRecords(models.Model):
     
     def __str__(self):
         return f'{self.user.username}\n{self.weather.date}\n\touter:{self.outer}\n\ttop:{self.top}\n\tbottom:{self.bottom}'
-    
