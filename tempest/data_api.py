@@ -4,7 +4,6 @@ from datetime import date, timedelta
 from .models import Weather
 from django.utils import timezone
 
-
 def get_date():
     today = date.today()
     return today.strftime('%Y%m%d')
@@ -53,7 +52,6 @@ def get_past_wthr_sum(date=get_date):
     }
     return result
 
-
 # get short period weather
 def get_sp_wthr(bt_unit=1, date=get_date()):
     """_summary_
@@ -73,7 +71,7 @@ def get_sp_wthr(bt_unit=1, date=get_date()):
             'ny': 127 # 예보지점 y좌표
             }
     #print(f'debug: params: {params}')
-    res = reqs.get(url, params=params, timeout=20)
+    res = reqs.get(url, params=params, timeout=30)
     #print(f'debug: res: {res}')
     #print(f'\t{res.json()}')
     return res.json()['response']['body']['items']['item']
@@ -92,13 +90,12 @@ def get_sp_wthr_sum():
             res = get_sp_wthr(base_time.index(btime))
             print(f'기준발표 시간: {btime}\n')
         else:
-            print('==크론 오류==')
+            print('#==크론 예약 외 시간==#')
             res = get_sp_wthr()
         res_past = get_sp_wthr(7, yesterday) # 어제 날씨 응답이 필요하다. 최저 기온은 전날 예보하기 때문. 
     except Exception as e:
         print(f'오류: {e}')
         pass
-    
     #print(f'debug$ res: {res[:3]}')
     #print(f'debug$ res_past: {res_past[:3]}')
     
@@ -125,7 +122,6 @@ def get_sp_wthr_sum():
             result[date][btime].update({elem['category']:elem['fcstValue'] })
     print(f'debug$ result: {result}\n----')
     return result
-
 
 def record_sp_wthr():
     json = get_sp_wthr_sum()

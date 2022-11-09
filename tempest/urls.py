@@ -8,5 +8,5 @@ urlpatterns = [
     path('test/', views.test, name='test'),
     path('jsontest/', views.jsontest, name='jsontest'),
     path('showpastwthr/<str:date>', views.show_past_wthr, name='show_wthr'),
-    path('showcurrentwthr/', views.show_current_wthr, name='show_current_wthr' )
+    path('recordcntwthr/', views.record_current_wthr, name='record_current_wthr' )
 ]

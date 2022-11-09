@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.http import JsonResponse
 from .data_api import *
+from .models import Weather
+from django.utils import timezone
 
 # Create your views here.
 
@@ -9,7 +11,16 @@ def test(req):
     return HttpResponse("Tempest 시험 가동")
 
 def index(req):
-    return HttpResponse("안녕 템페스트")
+    weather_object = Weather.objects.latest('date')
+    weather_json = weather_object.json
+    #print('debug!!', weather_json)
+    context = {'date': timezone.now(),  
+               'tmx': weather_json['TMX'],
+               'tmn': weather_json['TMN'],
+               'last_update_time': f'{str(weather_object.baseDate)}-{str(weather_object.baseTime)}' 
+            }
+    print(f'debg: {context}')
+    return render(req, 'tempest/index.html', context)
 
 def jsontest(req):
     j = {
@@ -28,6 +39,17 @@ def jsontest(req):
     return JsonResponse(j, safe=False, json_dumps_params={'ensure_ascii': False})
 
 
+def record_current_wthr(req):
+    record_sp_wthr()
+    res_json={}
+    try:
+        res_json = get_sp_wthr_sum()
+    except Exception as e:
+        print(f'\t오류: {e}')
+        
+    return JsonResponse(res_json, safe=False, json_dumps_params={'ensure_ascii': False})
+
+
 def show_past_wthr(req, date=get_date()):
     try:
         # res_json = get_wthr(date)
@@ -38,14 +60,4 @@ def show_past_wthr(req, date=get_date()):
         res_json = {"msg": '오류가 있습니다.'}
     print(get_date())
     
-    return JsonResponse(res_json, safe=False, json_dumps_params={'ensure_ascii': False})
-
-def show_current_wthr(req):
-    record_sp_wthr()
-    res_json={}
-    try:
-        res_json = get_sp_wthr_sum()
-    except Exception as e:
-        print(f'\t오류: {e}')
-        
     return JsonResponse(res_json, safe=False, json_dumps_params={'ensure_ascii': False})
