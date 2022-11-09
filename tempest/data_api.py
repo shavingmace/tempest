@@ -76,22 +76,28 @@ def get_sp_wthr(bt_unit=1, date=get_date()):
     #print(f'\t{res.json()}')
     return res.json()['response']['body']['items']['item']
 
-def get_sp_wthr_sum(bt_unit):
-    base_time = ['0200', '0500', '0800', '1100', '1400', '1700', '2000', '2300'] #(1일 8회)
-    btime = base_time[bt_unit]
+def get_sp_wthr_sum():
+    base_time = ['0200', '0500', '0800', '1100', 
+                 '1400', '1700', '2000', '2300'] #(1일 8회)
+    #btime = base_time[bt_unit]
+    btime = get_time()
     date = get_date()
     yesterday = get_past()
     result = {date:{ btime:{ } } } #결과를 담을 딕셔너리 자료형
     print(f'debug$ \n    함수호출시간: {get_time()}, \n    기준발표 시간: {btime}\n')
+    try:
+        res = get_sp_wthr(base_time.index(btime))
+        res_past = get_sp_wthr(7, yesterday) # 어제 날씨 응답이 필요하다. 최저 기온은 전날 예보하기 때문. 
+    except Exception as e:
+        print(f'오류: {e}')
+        pass
     
-    res = get_sp_wthr(bt_unit)
-    res_past = get_sp_wthr(7, yesterday) # 어제 날씨 응답이 필요하다. 최저 기온은 전날 예보하기 때문. 
     #print(f'debug$ res: {res[:3]}')
     #print(f'debug$ res_past: {res_past[:3]}')
     
     # 오늘 날씨 응답과 어제 날씨 응답 결과를 합친다 
     res.extend(res_past)
-    print(f'debug$ res extended: {res[:3]}\n')
+    #print(f'debug$ res extended: {res[:3]}\n')
     
     fcstTime_ls = []
     for elem in res: 
@@ -112,3 +118,8 @@ def get_sp_wthr_sum(bt_unit):
             result[date][btime].update({elem['category']:elem['fcstValue'] })
     print(f'debug$ result: {result}\n----')
     return result
+
+
+def record_sp_wthr():
+    result = get_sp_wthr_sum()
+    

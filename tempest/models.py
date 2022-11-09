@@ -8,6 +8,7 @@ class Weather(models.Model):
     # 날짜, 지역, API 응답
     date = models.DateTimeField()
     region =  models.CharField(max_length=6)
+    baseTime = models.CharField(max_length=6)
     content = models.TextField()
 
     def __str__(self):
