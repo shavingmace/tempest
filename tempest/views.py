@@ -13,7 +13,6 @@ def test(req):
 def index(req):
     weather_object = Weather.objects.latest('date')
     weather_json = weather_object.json
-    #print('debug!!', weather_json)
     
     #icon 결정
     pty = weather_json['시간별 예보'][get_time()]['PTY']
@@ -35,11 +34,11 @@ def index(req):
     context = {'date': timezone.now(),  
                'tmx': weather_json['TMX'],
                'tmn': weather_json['TMN'],
+               'tmp': weather_json['시간별 예보'][get_time()]['TMP'],
                'last_update_time': f'{weather_object.baseDate}-{weather_object.baseTime}',
                'icon': icon
             }
-    c =context['icon']
-    print(f'debug: {c}')
+
     return render(req, 'tempest/index.html', context)
 
 def jsontest(req):

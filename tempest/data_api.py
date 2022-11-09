@@ -115,7 +115,7 @@ def get_sp_wthr_sum():
         
     for elem in res:
         # 우리에게 필요한 데이터 코드 SKY, PTY, TMN, TMX; 각각 하늘 상태, 강수 형태, 최저기온, 최고기온
-        if elem['category'] in ['SKY', 'PTY'] and elem['fcstDate']==date:
+        if elem['category'] in ['SKY', 'PTY', 'TMP'] and elem['fcstDate']==date:
             #print('debug:', elem)
             result[date][btime]['시간별 예보'][elem['fcstTime']].update({elem['category']:elem['fcstValue'] })
         elif elem['category'] in ['TMN', "TMX"] and elem['fcstDate']==date:
