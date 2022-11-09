@@ -41,9 +41,11 @@ def show_past_wthr(req, date=get_date()):
     return JsonResponse(res_json, safe=False, json_dumps_params={'ensure_ascii': False})
 
 def show_current_wthr(req):
+    record_sp_wthr()
     res_json={}
     try:
         res_json = get_sp_wthr_sum()
     except Exception as e:
         print(f'\t오류: {e}')
+        
     return JsonResponse(res_json, safe=False, json_dumps_params={'ensure_ascii': False})

@@ -1,5 +1,7 @@
 from django.db import models
 from common.models import TempestUser
+import jsonfield
+
 
 # 사용자는 common.models.py에 정의됨.
     
@@ -7,12 +9,13 @@ from common.models import TempestUser
 class Weather(models.Model):
     # 날짜, 지역, API 응답
     date = models.DateTimeField()
-    region =  models.CharField(max_length=6)
-    baseTime = models.CharField(max_length=6)
-    content = models.TextField()
+    region =  models.CharField(max_length=10)
+    baseDate = models.CharField(max_length=10)
+    baseTime = models.CharField(max_length=10)
+    json = jsonfield.JSONField()
 
     def __str__(self):
-        return f'{self.id}: \n\t{self.date}\n\t{self.region}\n\t{self.content}'
+        return f'{self.id}: \n\t{self.date}\n\t{self.region}\n\t{self.baseTime}'
 
 # 피복 범주별 테이블 
 # top, outer, bottom, onepiece, shoes, headwear

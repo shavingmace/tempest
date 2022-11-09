@@ -1,7 +1,9 @@
 import requests as reqs
 import time as tm
 from datetime import date, timedelta
- 
+from .models import Weather
+from django.utils import timezone
+
 
 def get_date():
     today = date.today()
@@ -84,9 +86,14 @@ def get_sp_wthr_sum():
     date = get_date()
     yesterday = get_past()
     result = {date:{ btime:{ } } } #결과를 담을 딕셔너리 자료형
-    print(f'debug$ \n    함수호출시간: {get_time()}, \n    기준발표 시간: {btime}\n')
+    print(f'debug$ \n    함수호출시간: {get_time()}')
     try:
-        res = get_sp_wthr(base_time.index(btime))
+        if btime in base_time:
+            res = get_sp_wthr(base_time.index(btime))
+            print(f'기준발표 시간: {btime}\n')
+        else:
+            print('==크론 오류==')
+            res = get_sp_wthr()
         res_past = get_sp_wthr(7, yesterday) # 어제 날씨 응답이 필요하다. 최저 기온은 전날 예보하기 때문. 
     except Exception as e:
         print(f'오류: {e}')
@@ -121,5 +128,14 @@ def get_sp_wthr_sum():
 
 
 def record_sp_wthr():
-    result = get_sp_wthr_sum()
-    
+    json = get_sp_wthr_sum()
+    weather = Weather()
+    weather.date = timezone.now()
+    weather.baseDate = get_date()
+    weather.region = '서울'
+    weather.baseTime = get_time()
+    temp = json[list(json.keys())[0]]
+    weather.json = temp[list(temp.keys())[0]]
+    weather.save()
+    print(f'날씨 업데이트: \n\t시간:{weather.baseTime}\n\tWeather 객체:{weather}')
+    return

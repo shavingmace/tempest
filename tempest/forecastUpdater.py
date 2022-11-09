@@ -1,5 +1,5 @@
 from apscheduler.schedulers.background import BackgroundScheduler
-from .data_api import *
+from .data_api import record_sp_wthr
 
 class bt_unit_provider:
     def __init__(self, set_bt=0):
@@ -17,8 +17,7 @@ class bt_unit_provider:
             self.num +=1
         return temp
         
-def update():
-    
+def climateupdate():
     job_defaults = {
         'max_instances': 1
         }  
@@ -27,5 +26,5 @@ def update():
         job_defaults=job_defaults,
         timezone='Asia/Seoul'
     )
-    scheduler.add_job(get_sp_wthr_sum, 'cron', hour='2,5,8,11,14,17,20,23',  minute='5')
+    scheduler.add_job(record_sp_wthr, 'cron', hour='2,5,8,11,14,17,20,23',  minute='5')
     scheduler.start()
