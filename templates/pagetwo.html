@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container my-3">
+    <div class="row my-3">
+        <div class="col-4">
+            <h4>옷 선택</h4>
+        </div>
+    </div>
+    <form method="post" class="post-form">
+        {% csrf_token %}
+        {% include "form_errors.html" %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">선택완료</button>
+    </form>
+</div>
+{% endblock %}

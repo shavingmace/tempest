@@ -30,6 +30,10 @@ class Clothing_outer(models.Model):
 class Clothing_bottom(models.Model):
     name = models.CharField(max_length=10)
     def __str__(self): return self.name
+    
+class Clothing_etc(models.Model):
+    name = models.CharField(max_length=10)
+    def __str__(self): return self.name
         
         
 # 피복 기록 
@@ -39,6 +43,7 @@ class ClotheRecords(models.Model):
     top = models.ForeignKey(Clothing_top, on_delete=models.CASCADE)
     outer = models.ForeignKey(Clothing_outer, on_delete=models.CASCADE)
     bottom =models.ForeignKey(Clothing_bottom, on_delete=models.CASCADE)
+    etc = models.ForeignKey(Clothing_etc, on_delete=models.CASCADE)
     
     def __str__(self):
         return f'{self.user.username}\n{self.weather.date}\n\touter:{self.outer}\n\ttop:{self.top}\n\tbottom:{self.bottom}'

@@ -41,6 +41,15 @@ def index(req):
 
     return render(req, 'tempest/index.html', context)
 
+
+def second(req):
+    from .forms import RecordForm 
+    form = RecordForm()
+    
+    context={'form': form}
+    return render(req, 'pagetwo.html', context)
+
+
 def jsontest(req):
     j = {
          '쥐': {
