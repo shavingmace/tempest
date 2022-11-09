@@ -17,9 +17,9 @@ def index(req):
     context = {'date': timezone.now(),  
                'tmx': weather_json['TMX'],
                'tmn': weather_json['TMN'],
-               'last_update_time': f'{str(weather_object.baseDate)}-{str(weather_object.baseTime)}' 
+               'last_update_time': f'{weather_object.baseDate}-{weather_object.baseTime}' 
             }
-    print(f'debg: {context}')
+    #print(f'debg: {context}')
     return render(req, 'tempest/index.html', context)
 
 def jsontest(req):

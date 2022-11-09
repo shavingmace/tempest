@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div style="text-align: center">
+<div style="text-align: center" class='container my-3'>
     <div>{{ date }}</div>
     <h5>현재</h5>
     <h3>서울은</h3>
@@ -9,4 +9,10 @@
     <h4>{{sky_status}}</h4>
     <p><em>Last updated {{last_update_time}} </em></p>
 </div>
+<div style="text-align: center" class='container my-3'>
+    <form action={% url 'tempest:jsontest' %} >
+        <button type="submit">쥐의 메시지 받기</button>
+    </form>
+</div>
+
 {% endblock %}
