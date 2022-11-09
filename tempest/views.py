@@ -14,12 +14,32 @@ def index(req):
     weather_object = Weather.objects.latest('date')
     weather_json = weather_object.json
     #print('debug!!', weather_json)
+    
+    #icon 결정
+    pty = weather_json['시간별 예보'][get_time()]['PTY']
+    sky = weather_json['시간별 예보'][get_time()]['SKY']
+    icon =''
+    
+    print(f'debug {pty}:{type(pty)}, {sky}:{type(sky)}')
+    
+    if pty=='0':
+        if sky=='1':icon = 'fas fa-sun'
+        else: icon = 'fas fa-smog'
+    elif pty=='1': icon = 'fas fa-cloud-showers-heavy'
+    elif pty=='2': icon = 'fas fa-cloud-meatball'
+    elif pty=='3': icon = 'fas fa-snowflake'
+    elif pty=='4': icon = 'fas fa-poo-storm'
+    else: icon = 'error'
+    
+    
     context = {'date': timezone.now(),  
                'tmx': weather_json['TMX'],
                'tmn': weather_json['TMN'],
-               'last_update_time': f'{weather_object.baseDate}-{weather_object.baseTime}' 
+               'last_update_time': f'{weather_object.baseDate}-{weather_object.baseTime}',
+               'icon': icon
             }
-    #print(f'debg: {context}')
+    c =context['icon']
+    print(f'debug: {c}')
     return render(req, 'tempest/index.html', context)
 
 def jsontest(req):

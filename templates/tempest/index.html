@@ -3,11 +3,16 @@
 {% block content %}
 <div style="text-align: center" class='container my-3'>
     <div>{{ date }}</div>
+    <br>
+    <div style="text-align: center">
+        <i class="{{ icon }}" style='font-size:72px'></i>
+    </div>
+    <br>
     <h5>현재</h5>
     <h3>서울은</h3>
     <h4>최저 {{ tmn }} C | 최고 {{ tmx }} C</h4>
     <h4>{{sky_status}}</h4>
-    <p><em>Last updated {{last_update_time}} </em></p>
+    <p><em>마지막 업데이트 {{last_update_time}} </em></p>
 </div>
 <div style="text-align: center" class='container my-3'>
     <form action={% url 'tempest:jsontest' %} >
