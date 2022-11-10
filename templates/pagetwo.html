@@ -11,7 +11,7 @@
         {% csrf_token %}
         <div class="switch-field-otjang">
             <fieldset>
-                <legend>아우터:</legend>
+                <legend>아우터:</legend>  <!-- 나중엔 views.py 쪽에서 데이터 처리 후 context에 첨부해서 자동으로 생성할 것-->
             <input type="radio" id="radio1" name="switch-one" value="가디건" checked/>
 		    <label for="radio1">가디건</label>
             <input type="radio" id="radio2" name="switch-one" value="블루종" />
