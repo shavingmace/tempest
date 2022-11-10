@@ -4,6 +4,7 @@ from django.http import JsonResponse
 from .data_api import *
 from .models import Weather
 from django.utils import timezone
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -41,11 +42,10 @@ def index(req):
 
     return render(req, 'tempest/index.html', context)
 
-
+@login_required(login_url='common:login')
 def second(req):
     from .forms import RecordForm 
     form = RecordForm()
-    
     context={'form': form}
     return render(req, 'pagetwo.html', context)
 

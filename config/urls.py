@@ -15,12 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from tempest import views
+from tempest import views as tp_views
 
 urlpatterns = [
+    path('', tp_views.index, name='index'),
     path('admin/', admin.site.urls),
-    path('test/', views.test, name='test'),
     path('tempest/', include('tempest.urls'), name='tempest'),
-    path('common/', include('common.urls')),
-    path('', views.index, name='index')
+    path('common/', include('common.urls'))
 ]

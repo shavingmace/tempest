@@ -10,7 +10,7 @@
     <form method="post" class="post-form">
         {% csrf_token %}
         {% include "form_errors.html" %}
-        {{ form.as_p }}
+        {{ form.as_div }}
         <button type="submit" class="btn btn-primary">선택완료</button>
     </form>
 </div>
