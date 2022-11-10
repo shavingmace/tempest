@@ -44,9 +44,16 @@ def index(req):
 
 @login_required(login_url='common:login')
 def second(req):
-    from .forms import RecordForm 
-    form = RecordForm()
-    context={'form': form}
+    from .forms import RecordFormOuter, RecordFormTop, RecordFormEtc, RecordFormBottom
+    form_outer = RecordFormOuter()
+    form_top = RecordFormTop()
+    form_bottom = RecordFormBottom()
+    form_etc = RecordFormEtc()
+    context={'form_outer': form_outer,
+             'form_top': form_top,
+             'form_bottom': form_bottom,
+             'form_etc': form_etc
+             }
     return render(req, 'pagetwo.html', context)
 
 

@@ -9,9 +9,46 @@
     </div>
     <form method="post" class="post-form">
         {% csrf_token %}
-        {% include "form_errors.html" %}
-        {{ form.as_div }}
+        <div class="switch-field-otjang">
+            <fieldset>
+                <legend>아우터:</legend>
+            <input type="radio" id="radio1" name="switch-one" value="가디건" checked/>
+		    <label for="radio1">가디건</label>
+            <input type="radio" id="radio2" name="switch-one" value="블루종" />
+		    <label for="radio2">블루종</label>
+            <input type="radio" id="radio3" name="switch-one" value="숏패딩" />
+		    <label for="radio3">숏패딩</label>
+            <input type="radio" id="radio4" name="switch-one" value="가죽자켓" />
+		    <label for="radio4">가죽자켓</label>
+            <input type="radio" id="radio5" name="switch-one" value="트렌치코트" />
+		    <label for="radio5">트렌치코트</label>
+            <input type="radio" id="radio6" name="switch-one" value="야상" />
+		    <label for="radio6">야상</label>
+            <input type="radio" id="radio7" name="switch-one" value="코트" />
+		    <label for="radio7">코트</label>
+            <input type="radio" id="radio8" name="switch-one" value="자켓/블레이저" />
+		    <label for="radio8">자켓/블레이저</label>
+            <input type="radio" id="radio9" name="switch-one" value="롱패딩" />
+		    <label for="radio9">롱패딩</label>
+            <input type="radio" id="radio10" name="switch-one" value="무스탕" />
+		    <label for="radio10">무스탕</label>
+            <input type="radio" id="radio11" name="switch-one" value="플리스/뽀글이" />
+		    <label for="radio11">플리스/뽀글이</label>
+            <input type="radio" id="radio12" name="switch-one" value="후드집업" />
+		    <label for="후드집업">후드집업</label>
+        </div>
+        
+        <div class="">
+            {{ form_top.as_div }}
+        </div>
+        <div class="">
+            {{ form_bottom.as_div }}
+        </div>
+        <div class="">
+            {{ form_etc.as_div }}
+        </div>
         <button type="submit" class="btn btn-primary">선택완료</button>
+        {% include "form_errors.html" %}
     </form>
 </div>
 {% endblock %}

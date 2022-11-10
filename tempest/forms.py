@@ -1,5 +1,7 @@
 from .models import ClotheRecords
-from django import forms 
+from django import forms
+from django.utils.safestring import mark_safe
+
 
 def make_choices(ls: list):
     choices = []
@@ -13,21 +15,57 @@ class RecordForm(forms.ModelForm):
     #top_ls = ['후드티셔츠', '맨투맨/스웨트셔츠', '니트/스웨터', '셔츠/블라우스', '반소매 티셔츠', '긴소매 티셔츠', '민소매 티셔츠']
     #bottom_ls = ['원피스', '스커트', '슬랙스', '레깅스', '면바지', '반바지', '청바지']
     #etc_ls = ['버킷햇', '비니', '캡 모자', '목도리', '장갑']
-    
     #outer = forms.ChoiceField(required=True,  choices = make_choices(outer_ls), widget=forms.RadioSelect)
     #top = forms.ChoiceField(required=True,  choices = make_choices(top_ls), widget=forms.RadioSelect)
     #bottom = forms.ChoiceField(required=True,  choices = make_choices(bottom_ls), widget=forms.RadioSelect)
     #etc = forms.ChoiceField(required=True,  choices = make_choices(etc_ls), widget=forms.RadioSelect)
     #user = forms.CharField(label=("사용자"))
     #weather =  forms.CharField(label=("기상"))
-        
-    class Meta: 
+    
+    class Meta:     
         model = ClotheRecords
         fields = [ 'outer', 'top', 'bottom', 'etc']
         labels = { 'outer':'아우터', 'top':'상의', 'bottom':'하의', 'etc':'악세서리' }
-        widgets = {
-            'outer': forms.RadioSelect(),
-            'top': forms.RadioSelect(),
-            'bottom': forms.RadioSelect(),
-            'etc': forms.RadioSelect() 
+        widgets =  {
+            'outer': forms.RadioSelect(attrs={"class": ""}), #switch-field-otjang
+            'top': forms.RadioSelect(attrs={"class": ""}),
+            'bottom': forms.RadioSelect(attrs={"class": ""}),
+            'etc': forms.RadioSelect(attrs={"class": ""}) 
         }
+        
+        
+class RecordFormOuter(forms.ModelForm):
+    class Meta:     
+        model = ClotheRecords
+        fields = [ 'outer']
+        labels = { 'outer':'아우터' }
+        widgets =  {
+            'outer': forms.RadioSelect(attrs={"class": ""}), #switch-field-otjang
+        }
+        
+class RecordFormTop(forms.ModelForm):
+    class Meta:     
+        model = ClotheRecords
+        fields = [ 'top']
+        labels = { 'top':'상의' }
+        widgets =  {
+            'top': forms.RadioSelect(attrs={"class": ""}), #switch-field-otjang
+        }
+        
+class RecordFormBottom(forms.ModelForm):
+    class Meta:     
+        model = ClotheRecords
+        fields = [ 'bottom']
+        labels = { 'bottom':'하의' }
+        widgets =  {
+            'bottom': forms.RadioSelect(attrs={"class": ""}), #switch-field-otjang
+        }
+        
+class RecordFormEtc(forms.ModelForm):
+    class Meta:     
+        model = ClotheRecords
+        fields = [ 'etc']
+        labels = { 'etc':'etc.' }
+        widgets =  {
+            'etc': forms.RadioSelect(attrs={"class": ""}), #switch-field-otjang
+        } 
