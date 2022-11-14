@@ -78,9 +78,11 @@ def record_post(req):
     context = {'record':record}
     return render(req, 'pagetwo.html', context)
 
+
+# 3번째 화면에서 나옴 
 @login_required(login_url='common:login') 
-def recorded(req, qid):
-    record = get_object_or_404(ClotheRecords, pk=qid)
+def recorded(req):
+    record = ClotheRecords.objects.filter(user=req.user).first()
     context = {'record': record}
     return render(req, 'tempest/recorded.html', context)
 
