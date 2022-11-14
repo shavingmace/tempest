@@ -1,8 +1,9 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.shortcuts import render, get_object_or_404, redirect
+from django.http import HttpResponse, HttpResponseNotAllowed
 from django.http import JsonResponse
 from .data_api import *
-from .models import Weather
+from .models import Weather, ClotheRecords
+from common.models import TempestUser as User
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 
@@ -45,18 +46,38 @@ def index(req):
     # 로그인을 하지 않으면 로그인 URL로 강제 리디렉션 한다. 
     # 여기서 로그인 URL 함수는 common의 view의 login()
 @login_required(login_url='common:login') 
-def second(req):
-    from .forms import RecordFormOuter, RecordFormTop, RecordFormEtc, RecordFormBottom
-    form_outer = RecordFormOuter()
-    form_top = RecordFormTop()
-    form_bottom = RecordFormBottom()
-    form_etc = RecordFormEtc()
-    context={'form_outer': form_outer,
-             'form_top': form_top,
-             'form_bottom': form_bottom,
-             'form_etc': form_etc
-             }
+def record_form(req):
+    from .forms import RecordForm
+    form = RecordForm()
+    context={
+        'form': form
+        }
     return render(req, 'pagetwo.html', context)
+
+@login_required(login_url='common:login') 
+def record_post(req):
+    print(f'debug: {req.method}')
+    if req.method == 'POST':
+        form = ClotheRecords(req.POST)
+        if form.is_valid():
+            record = form.save(commit=False)
+            record.user = req.user
+            record.weather = Weather.objects.latest('date')
+            print(record)
+            record.save()
+            return redirect('tempest:recorded',  qid=record.id) # 기록 작성 후 리디렉션
+    else:
+        # form = AnswerForm() # 이 경우도 GET 메서드로 요청됨, 그러나 content 필드가 not None이라는 조건이 있으므로 처리되지 않음. 
+        return HttpResponseNotAllowed("POST 방식의 요청만 가능합니다.") # 명시적으로 POST 방식 이외의 처리를 거부함. 
+    context = {'record':record}
+    return render(req, 'pagetwo.html', context)
+
+@login_required(login_url='common:login') 
+def recorded(req, qid):
+    record = get_object_or_404(ClotheRecords, pk=qid)
+    context = {'record': record}
+    return render(req, 'tempest/recorded.html', context)
+
 
 
 # 개발 및 운영 중 유용한 함수.

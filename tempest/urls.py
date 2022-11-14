@@ -4,7 +4,8 @@ from . import views
 app_name = 'tempest'
 
 urlpatterns = [
-    path('second/', views.second, name='second'),
+    path('record/', views.record_form, name='record_form'),
+    path('record/post/', views.record_post, name='record_post'),
     path('test/', views.test, name='test'), 
     path('jsontest/', views.jsontest, name='jsontest'),
     path('showpastwthr/<str:date>', views.show_past_wthr, name='show_wthr'),
