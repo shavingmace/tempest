@@ -7,7 +7,7 @@
             <h4>옷 선택</h4>
         </div>
     </div>
-    <form method="post" class="post-form">
+    <form action="{% url 'tempest:record_post' %}" method="post" class="post-form">
         {% csrf_token %}
         {% if form.errors %}
             <div class="alert alert-danger" role="alert">

@@ -46,4 +46,4 @@ class ClotheRecords(models.Model):
     etc = models.ForeignKey(Clothing_etc, on_delete=models.CASCADE)
     
     def __str__(self):
-        return f'{self.user.username}\n{self.weather.date}\n\touter:{self.outer}\n\ttop:{self.top}\n\tbottom:{self.bottom}'
+        return f'{self.user}\n{self.weather.date}\n\touter:{self.outer}\n\ttop:{self.top}\n\tbottom:{self.bottom}'

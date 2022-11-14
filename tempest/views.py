@@ -3,9 +3,11 @@ from django.http import HttpResponse, HttpResponseNotAllowed
 from django.http import JsonResponse
 from .data_api import *
 from .models import Weather, ClotheRecords
-from common.models import TempestUser as User
+from .forms import RecordForm
+from common.models import TempestUser
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
+from django.conf import settings
 
 
 # 첫 화면을 브라우저에 렌더링하기 위한 함수
@@ -56,18 +58,22 @@ def record_form(req):
 
 @login_required(login_url='common:login') 
 def record_post(req):
-    print(f'debug: {req.method}')
+    user = get_object_or_404(TempestUser, pk=req.user.id)
+    print(f'debug: 사용자: {user}')
     if req.method == 'POST':
-        form = ClotheRecords(req.POST)
+        form = RecordForm(req.POST)
+        #print(form)
         if form.is_valid():
             record = form.save(commit=False)
-            record.user = req.user
+            #print(record)
+            record.user = user
             record.weather = Weather.objects.latest('date')
             print(record)
             record.save()
             return redirect('tempest:recorded',  qid=record.id) # 기록 작성 후 리디렉션
     else:
         # form = AnswerForm() # 이 경우도 GET 메서드로 요청됨, 그러나 content 필드가 not None이라는 조건이 있으므로 처리되지 않음. 
+        print(f'debug: form failed!!!!')
         return HttpResponseNotAllowed("POST 방식의 요청만 가능합니다.") # 명시적으로 POST 방식 이외의 처리를 거부함. 
     context = {'record':record}
     return render(req, 'pagetwo.html', context)
