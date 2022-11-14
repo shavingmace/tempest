@@ -1,6 +1,6 @@
 from django.db import models
 from common.models import TempestUser
-import jsonfield
+import jsonfield  # json 데이터를 데이터베이스에 저장하기 위한 라이브러리
 
 
 # 사용자는 common.models.py에 정의됨.

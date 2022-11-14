@@ -13,6 +13,9 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
+# 주 url 핸들링 파일. 
+
 from django.contrib import admin
 from django.urls import path, include
 from tempest import views as tp_views
@@ -20,6 +23,8 @@ from tempest import views as tp_views
 urlpatterns = [
     path('', tp_views.index, name='index'),
     path('admin/', admin.site.urls),
-    path('tempest/', include('tempest.urls'), name='tempest'),
+    
+    #여기 있는 include() 구문을 사용해 config 외의 하위 앱의 urls.py 파일을 묶어둔다. 
+    path('tempest/', include('tempest.urls'), name='tempest'), 
     path('common/', include('common.urls'))
 ]
