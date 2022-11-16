@@ -10,13 +10,13 @@
     <br>
     <h5>지금</h5>
     <h3>서울은</h3>
-    <h1 style='font-size:80px'> {{ tmp }} C</h1>
-    <h4>최저 {{ tmn }} C | 최고 {{ tmx }} C</h4>
+    <h1 style='font-size:80px'> {{ tmp }} ºC</h1>
+    <h4>최저 {{ tmn }} ºC | 최고 {{ tmx }} ºC</h4>
     <h4>{{sky_status}}</h4>
     <p><em>마지막 업데이트 {{last_update_time}} </em></p>
 </div>
 <div style="text-align: center" class='container my-3'>
-    <form action={% url 'tempest:record_form' %} >
+    <form action={% url 'tempest:top_list' %} >
         <button type="submit">옷장열기</button>
     </form>
 </div>
