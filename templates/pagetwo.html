@@ -1,13 +1,14 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
 <div class="container my-3">
     <div class="row my-3">
+        <img src="{%static 'tempest/images/products.png' %}" width=48px, height=48px;>
         <div class="col-4">
-            <h4>옷 선택</h4>
+            <h1 style='font-weight: bold'>옷 선택 하기</h1>
         </div>
     </div>
-    <form action="{% url 'tempest:record_post' %}" style="width: 50%;" method="post" class="post-form">
+    <form action="{% url 'tempest:record_post' %}" method="post" class="post-form">
         {% csrf_token %}
         {% if form.errors %}
             <div class="alert alert-danger" role="alert">
@@ -19,20 +20,89 @@
             {% endfor %}
             </div>
         {% endif %}
-        {% for field in form %}
-            <fieldset>
-            <legend>{{ field.label }}</legend>
-            {% for value in field %}
-                <div id="id_{{ field.label }}" class="form-check-inline">
-                    <div class="form-check-inline style="width: auto; margin-right: 0.5%; padding-left: 0; margin-left: 0; margin: 1em 0; display: inline-block;">
-                        <label for="id_{{ field.label }}_{{ forloop.counter }}" style="display: inline-block;"></label>
-                        <input type="radio" name="{{ field.label }}" value="{{ forloop.counter|add:"1" }}" class="form-check-inline form-check-label" style="width: auto; margin-right: 0.5%; padding-left: 0; margin-left: 0; margin: 1em 0; display: inline-block;" required id="id_{{ field.label }}_{{ forloop.counter|add:"1" }}">{{ value }}
-                    </div>
-                </div>
-            {% endfor %}          
-            </fieldset>
-        {% endfor %}
-        <button type="submit" class="btn btn-primary">선택완료</button>
+        
+
+        <fieldset>
+            <legend ><img src="{%static 'tempest/images/outer_icon.png' %}" width=40px, height=40px;>아우터</legend>
+                <input type="radio" name="choice1" id="choice1" value="{{ outer_list1.id }}">
+                <label for="choice">{{ outer_list1 }}</label>
+                <input type="radio" name="choice1" id="choice1" value="{{ outer_list2.id }}">
+                <label for="choice">{{ outer_list2 }}</label>
+                <input type="radio" name="choice1" id="choice1" value="{{ outer_list3.id }}">
+                <label for="choice">{{ outer_list3 }}</label>
+                <input type="radio" name="choice1" id="choice1" value="{{ outer_list4.id }}">
+                <label for="choice">{{ outer_list4 }}</label>
+                <input type="radio" name="choice1" id="choice1" value="{{ outer_list5.id }}">
+                <label for="choice">{{ outer_list5 }}</label>
+                <input type="radio" name="choice1" id="choice1" value="{{ outer_list6.id }}">
+                <label for="choice">{{ outer_list6 }}</label>
+                <input type="radio" name="choice1" id="choice1" value="{{ outer_list7.id }}">
+                <label for="choice">{{ outer_list7 }}</label>
+                <input type="radio" name="choice1" id="choice1" value="{{ outer_list8.id }}">
+                <label for="choice">{{ outer_list8 }}</label>
+                <input type="radio" name="choice1" id="choice1" value="{{ outer_list9.id }}">
+                <label for="choice">{{ outer_list9 }}</label>
+        </fieldset>
+  
+
+        <fieldset style='margin-top: 20px'>
+            <legend><img src="{%static 'tempest/images/top_icon.png' %}" width=40px, height=40px;>상의</legend>
+                <input type="radio" name="choice2" id="choice2" value="{{ top_list1.id }}">
+                <label for="choice">{{ top_list1 }}</label>
+                <input type="radio" name="choice2" id="choice2" value="{{ top_list2.id }}">
+                <label for="choice">{{ top_list2 }}</label>
+                <input type="radio" name="choice2" id="choice2" value="{{ top_list3.id }}">
+                <label for="choice">{{ top_list3 }}</label>
+                <input type="radio" name="choice2" id="choice2" value="{{ top_list4.id }}">
+                <label for="choice">{{ top_list4 }}</label>
+                <input type="radio" name="choice2" id="choice2" value="{{ top_list5.id }}">
+                <label for="choice">{{ top_list5 }}</label>
+                <input type="radio" name="choice2" id="choice2" value="{{ top_list6.id }}">
+                <label for="choice">{{ top_list6 }}</label>
+                <input type="radio" name="choice2" id="choice2" value="{{ top_list7.id }}">
+                <label for="choice">{{ top_list7 }}</label>
+                <input type="radio" name="choice2" id="choice2" value="{{ top_list8.id }}">
+                <label for="choice">{{ top_list8 }}</label>
+        </fieldset>
+
+        <fieldset style='margin-top: 20px'>
+            <legend><img src="{%static 'tempest/images/bottom_icon.png' %}" width=40px, height=40px;>하의</legend>
+                <input type="radio" name="choice3" id="choice3" value="{{ bottom_list1.id }}">
+                <label for="choice">{{ bottom_list1 }}</label>
+                <input type="radio" name="choice3" id="choice3" value="{{ bottom_list2.id }}">
+                <label for="choice">{{ bottom_list2 }}</label>
+                <input type="radio" name="choice3" id="choice3" value="{{ bottom_list3.id }}">
+                <label for="choice">{{ bottom_list3 }}</label>
+                <input type="radio" name="choice3" id="choice3" value="{{ bottom_list4.id }}">
+                <label for="choice">{{ bottom_list4 }}</label>
+                <input type="radio" name="choice3" id="choice3" value="{{ bottom_list5.id }}">
+                <label for="choice">{{ bottom_list5 }}</label>
+                <input type="radio" name="choice3" id="choice3" value="{{ bottom_list6.id }}">
+                <label for="choice">{{ bottom_list6 }}</label>
+                <input type="radio" name="choice3" id="choice3" value="{{ bottom_list7.id }}">
+                <label for="choice">{{ bottom_list7 }}</label>
+        </fieldset>
+
+        <fieldset style='margin-top: 20px'>
+            <legend style= ''><img src="{%static 'tempest/images/acc_icon.png' %}" width=40px, height=40px;>악세서리</legend>
+                <input type="radio" name="choice4" id="choice4" value="{{ etc_list1.id }}">
+                <label for="choice">{{ etc_list1 }}</label>
+                <input type="radio" name="choice4" id="choice4" value="{{ etc_list2.id }}">
+                <label for="choice">{{ etc_list2 }}</label>
+                <input type="radio" name="choice4" id="choice4" value="{{ etc_list3.id }}">
+                <label for="choice">{{ etc_list3 }}</label>
+                <input type="radio" name="choice4" id="choice4" value="{{ etc_list4.id }}">
+                <label for="choice">{{ etc_list4 }}</label>
+                <input type="radio" name="choice4" id="choice4" value="{{ etc_list5.id }}">
+                <label for="choice">{{ etc_list5 }}</label>
+        </fieldset>
+
+
+
+
+
+
+        <button type="submit" class="btn btn-primary" style='margin-top: 20px'>선택완료</button>
         {% include "form_errors.html" %}
     </form>
 </div>

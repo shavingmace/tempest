@@ -40,10 +40,7 @@ class Clothing_etc(models.Model):
 class ClotheRecords(models.Model):
     user = models.ForeignKey(TempestUser, on_delete=models.CASCADE)
     weather = models.ForeignKey(Weather, on_delete=models.CASCADE)
-    top = models.ForeignKey(Clothing_top, on_delete=models.CASCADE)
-    outer = models.ForeignKey(Clothing_outer, on_delete=models.CASCADE)
-    bottom =models.ForeignKey(Clothing_bottom, on_delete=models.CASCADE)
-    etc = models.ForeignKey(Clothing_etc, on_delete=models.CASCADE)
+    clothes = jsonfield.JSONField()
     
     def __str__(self):
-        return f'{self.user}\n{self.weather.date}\n\touter:{self.outer}\n\ttop:{self.top}\n\tbottom:{self.bottom}'
+        return f'{self.user}\n\t{self.weather.date}\n\t{self.clothes}'

@@ -8,6 +8,8 @@ from common.models import TempestUser
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
+from .models import Weather, ClotheRecords, Clothing_top, Clothing_bottom, Clothing_outer, Clothing_etc
+
 
 
 # 첫 화면을 브라우저에 렌더링하기 위한 함수
@@ -49,40 +51,133 @@ def index(req):
     # 여기서 로그인 URL 함수는 common의 view의 login()
 @login_required(login_url='common:login') 
 def record_form(req):
-    from .forms import RecordForm
     form = RecordForm()
     context={
         'form': form
         }
     return render(req, 'pagetwo.html', context)
 
+
+def record_form2(request):
+    top_list1= Clothing_top.objects.get(name="니트")
+    top_list2 = Clothing_top.objects.get(name="맨투맨")
+    top_list3 = Clothing_top.objects.get(name="후드")
+    top_list4 = Clothing_top.objects.get(name="긴팔 티셔츠")
+    top_list5 = Clothing_top.objects.get(name="셔츠")
+    top_list6 = Clothing_top.objects.get(name="블라우스")
+    top_list7 = Clothing_top.objects.get(name="반팔 티셔츠")    
+    top_list8 = Clothing_top.objects.get(name="민소매 셔츠")
+    outer_list= Clothing_outer.objects.get(name="롱패딩")
+    outer_list1 = Clothing_outer.objects.get(name="숏패딩")
+    outer_list2 = Clothing_outer.objects.get(name="코트")
+    outer_list3 = Clothing_outer.objects.get(name="무스탕")
+    outer_list4 = Clothing_outer.objects.get(name="플리스")
+    outer_list5 = Clothing_outer.objects.get(name="레더자켓")
+    outer_list6 = Clothing_outer.objects.get(name="트렌치코트")    
+    outer_list7 = Clothing_outer.objects.get(name="블레이저")
+    outer_list8 = Clothing_outer.objects.get(name="후드집업")    
+    outer_list9 = Clothing_outer.objects.get(name="가디건")   
+    etc_list1 = Clothing_etc.objects.get(name="장갑")
+    etc_list2 = Clothing_etc.objects.get(name="목도리")
+    etc_list3 = Clothing_etc.objects.get(name="캡모자")
+    etc_list4 = Clothing_etc.objects.get(name="비니")
+    etc_list5 = Clothing_etc.objects.get(name="버킷햇")
+    bottom_list1= Clothing_bottom.objects.get(name="청바지")
+    bottom_list2 = Clothing_bottom.objects.get(name="면바지")
+    bottom_list3 = Clothing_bottom.objects.get(name="슬랙스")
+    bottom_list4 = Clothing_bottom.objects.get(name="레깅스")
+    bottom_list5 = Clothing_bottom.objects.get(name="스커트")
+    bottom_list6 = Clothing_bottom.objects.get(name="원피스")
+    bottom_list7 = Clothing_bottom.objects.get(name="반바지")
+    context = {'top_list1': top_list1,
+               'top_list2': top_list2,
+               'top_list3': top_list3,
+               'top_list4': top_list4,
+               'top_list5': top_list5,
+               'top_list6': top_list6,
+               'top_list7': top_list7,
+               'top_list8': top_list8,
+               'outer_list': outer_list,
+               'outer_list1': outer_list1,
+               'outer_list2': outer_list2,
+               'outer_list3': outer_list3,
+               'outer_list4': outer_list4,
+               'outer_list5': outer_list5,
+               'outer_list6': outer_list6,
+               'outer_list7': outer_list7,
+               'outer_list8': outer_list8,
+               'outer_list9': outer_list9,
+               'etc_list1': etc_list1,
+               'etc_list2': etc_list2,
+               'etc_list3': etc_list3,
+               'etc_list4': etc_list4,
+               'etc_list5': etc_list5, 
+               'bottom_list1': bottom_list1,
+                'bottom_list2': bottom_list2,
+                'bottom_list3': bottom_list3,
+                'bottom_list4': bottom_list4,
+                'bottom_list5': bottom_list5,
+                'bottom_list6': bottom_list6,
+                'bottom_list7': bottom_list7}
+    return render(request, 'pagetwo.html', context)
+
+
+
+
+
+
+
+@login_required(login_url='common:login') 
+def record_post_bak(req):
+    user = get_object_or_404(TempestUser, pk=req.user.id)
+    print(f'debug: 사용자: {user}')
+    form = RecordForm(req.POST)
+    if req.method == 'POST':
+        if form.is_valid():
+            record = form.save(commit=False)
+            record.user = user
+            record.weather = Weather.objects.latest('date')
+            print(f'debug: record = {record}')
+            record.save()
+            return redirect('tempest:recorded') # 기록 작성 후 리디렉션
+        else: 
+            context = {'record':RecordForm()}
+            print(f'debug: form failed!!!!  1')
+            print(f'debug: form = {form.cleaned_data}')
+            for i in form.cleaned_data:
+                print(i)
+            return render(req, 'pagetwo.html', context)
+    else:
+        # form = AnswerForm() # 이 경우도 GET 메서드로 요청됨, 그러나 content 필드가 not None이라는 조건이 있으므로 처리되지 않음. 
+        print(f'debug: form failed!!!!   2')
+        return HttpResponseNotAllowed("POST 방식의 요청만 가능합니다.") # 명시적으로 POST 방식 이외의 처리를 거부함. 
+    
 @login_required(login_url='common:login') 
 def record_post(req):
     user = get_object_or_404(TempestUser, pk=req.user.id)
     print(f'debug: 사용자: {user}')
+    form = RecordForm()
     if req.method == 'POST':
-        form = RecordForm(req.POST)
-        #print(form)
-        if form.is_valid():
-            record = form.save(commit=False)
-            #print(record)
-            record.user = user
-            record.weather = Weather.objects.latest('date')
-            print(record)
-            record.save()
-            return redirect('tempest:recorded',  qid=record.id) # 기록 작성 후 리디렉션
+        record = form.save(commit=False)
+        record.user = user
+        record.weather = Weather.objects.latest('date')
+        record.clothes = req.POST
+        print(f'debug: @record_post2 record = {record}')
+        record.save()
+        return redirect('tempest:recorded') # 기록 작성 후 리디렉션
     else:
         # form = AnswerForm() # 이 경우도 GET 메서드로 요청됨, 그러나 content 필드가 not None이라는 조건이 있으므로 처리되지 않음. 
-        print(f'debug: form failed!!!!')
+        print(f'debug: form failed!!!!   2')
         return HttpResponseNotAllowed("POST 방식의 요청만 가능합니다.") # 명시적으로 POST 방식 이외의 처리를 거부함. 
-    context = {'record':record}
-    return render(req, 'pagetwo.html', context)
 
 
-# 3번째 화면에서 나옴 
+
+# 3번째 화면을 보여주는 view 함수 
 @login_required(login_url='common:login') 
 def recorded(req):
-    record = ClotheRecords.objects.filter(user=req.user).first()
+    filterlist = ClotheRecords.objects.filter(user=req.user)
+    record = filterlist.latest('id')
+    print(f'debug: @recorded  {record}')
     context = {'record': record}
     return render(req, 'tempest/recorded.html', context)
 
