@@ -7,7 +7,7 @@
             <h4>옷 선택</h4>
         </div>
     </div>
-    <form action="{% url 'tempest:record_post' %}" method="post" class="post-form">
+    <form action="{% url 'tempest:record_post' %}" style="width: 50%;" method="post" class="post-form">
         {% csrf_token %}
         {% if form.errors %}
             <div class="alert alert-danger" role="alert">
@@ -19,7 +19,19 @@
             {% endfor %}
             </div>
         {% endif %}
-        {{ form.as_div }}
+        {% for field in form %}
+            <fieldset>
+            <legend>{{ field.label }}</legend>
+            {% for value in field %}
+                <div id="id_{{ field.label }}" class="form-check-inline">
+                    <div class="form-check-inline style="width: auto; margin-right: 0.5%; padding-left: 0; margin-left: 0; margin: 1em 0; display: inline-block;">
+                        <label for="id_{{ field.label }}_{{ forloop.counter }}" style="display: inline-block;"></label>
+                        <input type="radio" name="{{ field.label }}" value="{{ forloop.counter|add:"1" }}" class="form-check-inline form-check-label" style="width: auto; margin-right: 0.5%; padding-left: 0; margin-left: 0; margin: 1em 0; display: inline-block;" required id="id_{{ field.label }}_{{ forloop.counter|add:"1" }}">{{ value }}
+                    </div>
+                </div>
+            {% endfor %}          
+            </fieldset>
+        {% endfor %}
         <button type="submit" class="btn btn-primary">선택완료</button>
         {% include "form_errors.html" %}
     </form>

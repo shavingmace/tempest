@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container my-3">
+    <div class="row my-3">
+        <div class="col-4">
+            <h4>옷 선택</h4>
+        </div>
+    </div>
+    <form action="{% url 'tempest:record_post' %}" style="width: 50%;" method="post" class="post-form">
+        {% csrf_token %}
+        {% if form.errors %}
+            <div class="alert alert-danger" role="alert">
+            {% for field in form %}
+                {% if field.erros %}
+                <strong>{{ field.label }}</strong>
+                {{ field.errors }}
+                {% endif %}
+            {% endfor %}
+            </div>
+        {% endif %}
+        {{ form.as_div }}
+        <button type="submit" class="btn btn-primary">선택완료</button>
+        {% include "form_errors.html" %}
+    </form>
+</div>
+{% endblock %}

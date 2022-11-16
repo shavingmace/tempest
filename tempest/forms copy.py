@@ -26,7 +26,7 @@ class RecordForm(forms.ModelForm):
         model = ClotheRecords
         fields = [ 'outer', 'top', 'bottom', 'etc']
         labels = { 'outer':'아우터', 'top':'상의', 'bottom':'하의', 'etc':'악세서리' }
-"""        widgets =  {
+        widgets =  {
             'outer': forms.RadioSelect(attrs={
                 'class': "form-check-inline form-check-label", #form-check form-check-inline
                 'style':""
@@ -34,4 +34,4 @@ class RecordForm(forms.ModelForm):
             'top': forms.RadioSelect(attrs={'class': "form-check form-check-inline"}),
             'bottom': forms.RadioSelect(attrs={'class': "form-check form-check-inline"}),
             'etc': forms.RadioSelect(attrs={'class': "form-check form-check-inline"}) 
-        }"""
+        }
