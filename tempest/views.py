@@ -135,10 +135,38 @@ def record_post(req):
 @login_required(login_url='common:login') 
 def recorded(req):
     filterlist = ClotheRecords.objects.filter(user=req.user).order_by('-id')
-    record = filterlist[:5]
-    context = {'records': record}
+    record = filterlist.latest('id') # 사용자의 기록 호출
+    #print(f'debug@recorded - record는 {record}')
+    
+    records = {} 
+    outer_ls =  Clothing_outer.objects.filter()
+    top_ls = Clothing_top.objects.filter()
+    bottom_ls = Clothing_bottom.objects.filter()
+    etc_ls = Clothing_etc.objects.filter()
+    
+    for category, user_clothings in record.clothes.items():
+        print(f'debug: {category}: {user_clothings}')
+        
+        for elem in user_clothings:
+            for outer in outer_ls:
+                if elem in outer.name:
+                    records.update({elem: outer.img_path})
+            for top in top_ls:
+                if elem in top.name:
+                    records.update({elem:  top.img_path})
+            for bottom in bottom_ls:
+                if elem in bottom.name:
+                    records.update({elem:  bottom.img_path})
+            for etc in etc_ls:
+                if elem in etc.name:
+                    records.update({elem: etc.img_path})
+
+    context = {'records': records }
     print(f'debug: @recorded - five records: {context}')
+    
     return render(req, 'tempest/recorded.html', context)
+
+
 
 
 
@@ -160,6 +188,15 @@ def record_current_wthr(req):
         print(f'\t오류: {e}')
         
     return JsonResponse(res_json, safe=False, json_dumps_params={'ensure_ascii': False})
+
+
+
+
+
+
+
+
+
 
 
 

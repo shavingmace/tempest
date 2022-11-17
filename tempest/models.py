@@ -21,18 +21,22 @@ class Weather(models.Model):
 # top, outer, bottom, onepiece, shoes, headwear
 class Clothing_top(models.Model):
     name = models.CharField(max_length=10)
+    img_path = models.TextField(null=True)
     def __str__(self): return self.name
     
 class Clothing_outer(models.Model):
     name = models.CharField(max_length=10)
+    img_path = models.TextField(null=True)
     def __str__(self): return self.name
 
 class Clothing_bottom(models.Model):
     name = models.CharField(max_length=10)
+    img_path = models.TextField(null=True)
     def __str__(self): return self.name
     
 class Clothing_etc(models.Model):
     name = models.CharField(max_length=10)
+    img_path = models.TextField(null=True)
     def __str__(self): return self.name
         
         

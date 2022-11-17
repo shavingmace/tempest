@@ -1,10 +1,21 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<!-- 내용 시작 -->
+<div class="container-fluid my-2  h-100 d-flex justify-content-center align-items-center">
+    <div class="row text-center" style=" flex-direction: column; width: 50%; height: 50%;">
+        {% for name, img_path in records.items %}
+        <div class="col-md-6 offset-md-3 text-center" style="margin-bottom:2%;">
+            <div class="card custom-control custom-checkbox image-checkbox" style="margin-bottom:2%;">
+                <div class="card"></div>
+                    <img src="{{ img_path }}" alt="#" class="img-fluid">
+                <div class='card-body'><p class='card-text' style='text-align:center'><b>{{ name }}</b></p></div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
 
 
-<p>{{ record }}</p>
-
-
-
+<!-- 끝 -->
 {% endblock %}
