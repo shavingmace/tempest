@@ -1,5 +1,16 @@
 {% extends 'base.html' %}
 {% block content %}
+<style>
+    @import url('https://fonts.googleapis.com/earlyaccess/hanna.css');
+    #navbarNav
+    {
+      font-family: 'Hanna'; sans-serif;
+    }
+    #logo
+    {
+      font-family: 'Hanna'; sans-serif;
+    }
+</style>
 <div id="bg">
     <div style="text-align: center", class='container my-3' id="font" >
         <br>
@@ -10,10 +21,12 @@
             <i class="" style='font-size:72px'></i>
         </div>
         <br>
-        <h5>지금</h5>
-        <h3>서울은</h3>
-        <h1 style='font-size:80px'> {{ tmp }} ℃</h1>
-        <h4>최저 {{ tmn }} ℃ | 최고 {{ tmx }} ℃</h4>
+        <div id="logo">
+            <h5>지금</h5>
+            <h3>서울은</h3>
+            <h1 style='font-size:80px'> {{ tmp }} ℃</h1>
+            <h4>최저 {{ tmn }} ℃ | 최고 {{ tmx }} ℃</h4>
+        </div>
         <h4>{{sky_status}}</h4>
         <p><em>마지막 업데이트 {{last_update_time}} </em></p>
     </>    
