@@ -70,7 +70,7 @@ def record_post(req):
     form = RecordForm()
     if req.method == 'POST':
         # 먼저 상의와 하의 정보가 들어왔는지 체크
-        print(f'debug@record_post: \n\t req.POST.keys(): \n\t\t {req.POST.keys()}')
+        #print(f'debug@record_post: \n\t req.POST.keys(): \n\t\t {req.POST.keys()}')
 
         top_check = False
         bottom_check = False
@@ -82,10 +82,10 @@ def record_post(req):
         print(f'debug==2 {str(bottom_check)}')
         print('debug==', str((top_check is True) and (bottom_check is True)))
         if (top_check and bottom_check):
-            print(f'debug@record_post - checked: {top_check}, {bottom_check}')
+            #print(f'debug@record_post - checked: {top_check}, {bottom_check}')
             pass
         else:
-            print(f'debug@record_post - entered else')
+            #print(f'debug@record_post - entered else')
             context = {
                 "outer": [x.name for x in Clothing_outer.objects.filter()],
                 "top": [x.name for x in Clothing_top.objects.filter()],
@@ -121,12 +121,12 @@ def record_post(req):
         record.user = user
         record.weather = Weather.objects.latest('date')
         record.clothes = clothes_data
-        print(f'debug: @record_post \n\trecord = {record}')
+        #print(f'debug: @record_post \n\trecord = {record}')
         record.save()
         return redirect('tempest:recorded') # 기록 작성 후 리디렉션
     else:
         # form = AnswerForm() # 이 경우도 GET 메서드로 요청됨, 그러나 content 필드가 not None이라는 조건이 있으므로 처리되지 않음. 
-        print(f'debug: form failed!!!!   2')
+        print(f'debug: requested without POST')
         return HttpResponseNotAllowed("POST 방식의 요청만 가능합니다.") # 명시적으로 POST 방식 이외의 처리를 거부함. 
 
 
@@ -134,12 +134,10 @@ def record_post(req):
 # 3번째 화면을 보여주는 view 함수 
 @login_required(login_url='common:login') 
 def recorded(req):
-    filterlist = ClotheRecords.objects.filter(user=req.user)
-    print(f'debug: @recorded  {filterlist}')
-    record = filterlist.latest('id')
-    print(f'debug: @recorded - all objects: {filterlist}')
-    print(f'debug: @recorded - a single record: {record}')
-    context = {'record': record}
+    filterlist = ClotheRecords.objects.filter(user=req.user).order_by('-id')
+    record = filterlist[:5]
+    context = {'records': record}
+    print(f'debug: @recorded - five records: {context}')
     return render(req, 'tempest/recorded.html', context)
 
 
