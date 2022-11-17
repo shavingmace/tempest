@@ -8,101 +8,92 @@
             <h1 style='font-weight: bold'>옷 선택 하기</h1>
         </div>
     </div>
-    <form action="{% url 'tempest:record_post' %}" method="post" class="post-form">
+    <form action="{% url 'tempest:record_post' %}" method="post" class="post-form" >
         {% csrf_token %}
-        {% if form.errors %}
-            <div class="alert alert-danger" role="alert">
-            {% for field in form %}
-                {% if field.erros %}
-                <strong>{{ field.label }}</strong>
-                {{ field.errors }}
-                {% endif %}
-            {% endfor %}
+        <!-- 내용 시작~ -->
+        
+        <!-- 아우터~ -->
+        <h4 style="text-align:center; margin-bottom:2%;"><b>아우터</b></h4>
+        <div class="row" style="justify-content: ; flex-direction: row;">
+            {% for clothes in outer %}
+            <div class="col-md-4" style="margin-bottom:2%;">
+                <div class="card custom-control custom-checkbox image-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="outer_{{ forloop.counter0 }}" 
+                        name="outer_{{ forloop.counter0 }}" value="{{ clothes }}">
+                    <label class="custom-control-label" for="outer_{{ forloop.counter0 }}">
+                        <img src="img/annie-spratt.jpg" alt="#" class="img-fluid">
+                        <div class='card-body'><p class='card-text'>{{ clothes }}</p></div>
+                    </label>
+                </div>
             </div>
+            {% endfor %}
+        </div>
+        <br><br>
+        
+        {% if error.top %}
+        <div class="alert alert-danger">상의를 하나 이상 선택하세요</div>
         {% endif %}
+
+        <!-- 상의~ -->
+        <h4 style="text-align:center; margin-bottom:2%;"><b>상의</b></h4>
+        <div class="row" style="justify-content: ; flex-direction: row;">
+            {% for clothes in top %}
+            <div class="col-md-4" style="margin-bottom:2%;">
+                <div class="card custom-control custom-checkbox image-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="top_{{ forloop.counter0 }}" 
+                        name="top_{{ forloop.counter0 }}" value="{{ clothes }}">
+                    <label class="custom-control-label" for="top_{{ forloop.counter0 }}">
+                        <img src="img/annie-spratt.jpg" alt="#" class="img-fluid">
+                        <div class='card-body'><p class='card-text'>{{ clothes }}</p></div>
+                    </label>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
         
 
-        <fieldset>
-            <legend ><img src="{%static 'tempest/images/outer_icon.png' %}" width=40px, height=40px;>아우터</legend>
-                <input type="radio" name="choice1" id="choice1" value="{{ outer_list1.id }}">
-                <label for="choice">{{ outer_list1 }}</label>
-                <input type="radio" name="choice1" id="choice1" value="{{ outer_list2.id }}">
-                <label for="choice">{{ outer_list2 }}</label>
-                <input type="radio" name="choice1" id="choice1" value="{{ outer_list3.id }}">
-                <label for="choice">{{ outer_list3 }}</label>
-                <input type="radio" name="choice1" id="choice1" value="{{ outer_list4.id }}">
-                <label for="choice">{{ outer_list4 }}</label>
-                <input type="radio" name="choice1" id="choice1" value="{{ outer_list5.id }}">
-                <label for="choice">{{ outer_list5 }}</label>
-                <input type="radio" name="choice1" id="choice1" value="{{ outer_list6.id }}">
-                <label for="choice">{{ outer_list6 }}</label>
-                <input type="radio" name="choice1" id="choice1" value="{{ outer_list7.id }}">
-                <label for="choice">{{ outer_list7 }}</label>
-                <input type="radio" name="choice1" id="choice1" value="{{ outer_list8.id }}">
-                <label for="choice">{{ outer_list8 }}</label>
-                <input type="radio" name="choice1" id="choice1" value="{{ outer_list9.id }}">
-                <label for="choice">{{ outer_list9 }}</label>
-        </fieldset>
-  
+        {% if error.bottom %}
+        <div class="alert alert-danger">하의를 하나 이상 선택하세요</div>
+        {% endif %}
+        <!-- 하의~ -->
+        <h4 style="text-align:center; margin-bottom:2%;"><b>하의</b></h4>
+        <div class="row" style="justify-content: ; flex-direction: row;">
+            {% for clothes in bottom %}
+            <div class="col-md-4" style="margin-bottom:2%;">
+                <div class="card custom-control custom-checkbox image-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="bottom_{{ forloop.counter0 }}" 
+                        name="bottom_{{ forloop.counter0 }}" value="{{ clothes }}">
+                    <label class="custom-control-label" for="bottom_{{ forloop.counter0 }}">
+                        <img src="img/annie-spratt.jpg" alt="#" class="img-fluid">
+                        <div class='card-body'><p class='card-text'>{{ clothes }}</p></div>
+                    </label>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
 
-        <fieldset style='margin-top: 20px'>
-            <legend><img src="{%static 'tempest/images/top_icon.png' %}" width=40px, height=40px;>상의</legend>
-                <input type="radio" name="choice2" id="choice2" value="{{ top_list1.id }}">
-                <label for="choice">{{ top_list1 }}</label>
-                <input type="radio" name="choice2" id="choice2" value="{{ top_list2.id }}">
-                <label for="choice">{{ top_list2 }}</label>
-                <input type="radio" name="choice2" id="choice2" value="{{ top_list3.id }}">
-                <label for="choice">{{ top_list3 }}</label>
-                <input type="radio" name="choice2" id="choice2" value="{{ top_list4.id }}">
-                <label for="choice">{{ top_list4 }}</label>
-                <input type="radio" name="choice2" id="choice2" value="{{ top_list5.id }}">
-                <label for="choice">{{ top_list5 }}</label>
-                <input type="radio" name="choice2" id="choice2" value="{{ top_list6.id }}">
-                <label for="choice">{{ top_list6 }}</label>
-                <input type="radio" name="choice2" id="choice2" value="{{ top_list7.id }}">
-                <label for="choice">{{ top_list7 }}</label>
-                <input type="radio" name="choice2" id="choice2" value="{{ top_list8.id }}">
-                <label for="choice">{{ top_list8 }}</label>
-        </fieldset>
+        <!-- 액세서리~ -->
+        <h4 style="text-align:center; margin-bottom:2%;"><b>액세서리</b></h4>
+        <div class="row" style="justify-content: ; flex-direction: row;">
+            {% for clothes in etc %}
+            <div class="col-md-4" style="margin-bottom:2%;">
+                <div class="card custom-control custom-checkbox image-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="etc_{{ forloop.counter0 }}" 
+                        name="etc_{{ forloop.counter0 }}" value="{{ clothes }}">
+                    <label class="custom-control-label" for="etc_{{ forloop.counter0 }}">
+                        <img src="img/annie-spratt.jpg" alt="#" class="img-fluid">
+                        <div class='card-body'><p class='card-text'>{{ clothes }}</p></div>
+                    </label>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
 
-        <fieldset style='margin-top: 20px'>
-            <legend><img src="{%static 'tempest/images/bottom_icon.png' %}" width=40px, height=40px;>하의</legend>
-                <input type="radio" name="choice3" id="choice3" value="{{ bottom_list1.id }}">
-                <label for="choice">{{ bottom_list1 }}</label>
-                <input type="radio" name="choice3" id="choice3" value="{{ bottom_list2.id }}">
-                <label for="choice">{{ bottom_list2 }}</label>
-                <input type="radio" name="choice3" id="choice3" value="{{ bottom_list3.id }}">
-                <label for="choice">{{ bottom_list3 }}</label>
-                <input type="radio" name="choice3" id="choice3" value="{{ bottom_list4.id }}">
-                <label for="choice">{{ bottom_list4 }}</label>
-                <input type="radio" name="choice3" id="choice3" value="{{ bottom_list5.id }}">
-                <label for="choice">{{ bottom_list5 }}</label>
-                <input type="radio" name="choice3" id="choice3" value="{{ bottom_list6.id }}">
-                <label for="choice">{{ bottom_list6 }}</label>
-                <input type="radio" name="choice3" id="choice3" value="{{ bottom_list7.id }}">
-                <label for="choice">{{ bottom_list7 }}</label>
-        </fieldset>
-
-        <fieldset style='margin-top: 20px'>
-            <legend style= ''><img src="{%static 'tempest/images/acc_icon.png' %}" width=40px, height=40px;>악세서리</legend>
-                <input type="radio" name="choice4" id="choice4" value="{{ etc_list1.id }}">
-                <label for="choice">{{ etc_list1 }}</label>
-                <input type="radio" name="choice4" id="choice4" value="{{ etc_list2.id }}">
-                <label for="choice">{{ etc_list2 }}</label>
-                <input type="radio" name="choice4" id="choice4" value="{{ etc_list3.id }}">
-                <label for="choice">{{ etc_list3 }}</label>
-                <input type="radio" name="choice4" id="choice4" value="{{ etc_list4.id }}">
-                <label for="choice">{{ etc_list4 }}</label>
-                <input type="radio" name="choice4" id="choice4" value="{{ etc_list5.id }}">
-                <label for="choice">{{ etc_list5 }}</label>
-        </fieldset>
-
-
-
-
-
-
-        <button type="submit" class="btn btn-primary" style='margin-top: 20px'>선택완료</button>
+        <!-- 내용 끝~ -->
+        <div style='display: flex; justify-content: center; margin-top:5%;'>
+            <button type="submit" class="btn btn-primary" >선택완료</button>
+        </div>
         {% include "form_errors.html" %}
     </form>
 </div>

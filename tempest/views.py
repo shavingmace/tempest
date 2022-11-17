@@ -8,7 +8,7 @@ from common.models import TempestUser
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
-from .models import Weather, ClotheRecords, Clothing_top, Clothing_bottom, Clothing_outer, Clothing_etc
+from .models import Weather, ClotheRecords, Clothing_outer, Clothing_top, Clothing_bottom, Clothing_etc
 
 
 
@@ -51,118 +51,77 @@ def index(req):
     # 여기서 로그인 URL 함수는 common의 view의 login()
 @login_required(login_url='common:login') 
 def record_form(req):
-    form = RecordForm()
-    context={
-        'form': form
+    context= {
+        "outer": [x.name for x in Clothing_outer.objects.filter()],
+        "top": [x.name for x in Clothing_top.objects.filter()],
+        "bottom":[x.name for x in Clothing_bottom.objects.filter()],
+        "etc":[x.name for x in Clothing_etc.objects.filter()],
         }
+
+    #print(f'debug@record_form outer1{context}')
     return render(req, 'pagetwo.html', context)
 
 
-def record_form2(request):
-    top_list1= Clothing_top.objects.get(name="니트")
-    top_list2 = Clothing_top.objects.get(name="맨투맨")
-    top_list3 = Clothing_top.objects.get(name="후드")
-    top_list4 = Clothing_top.objects.get(name="긴팔 티셔츠")
-    top_list5 = Clothing_top.objects.get(name="셔츠")
-    top_list6 = Clothing_top.objects.get(name="블라우스")
-    top_list7 = Clothing_top.objects.get(name="반팔 티셔츠")    
-    top_list8 = Clothing_top.objects.get(name="민소매 셔츠")
-    outer_list= Clothing_outer.objects.get(name="롱패딩")
-    outer_list1 = Clothing_outer.objects.get(name="숏패딩")
-    outer_list2 = Clothing_outer.objects.get(name="코트")
-    outer_list3 = Clothing_outer.objects.get(name="무스탕")
-    outer_list4 = Clothing_outer.objects.get(name="플리스")
-    outer_list5 = Clothing_outer.objects.get(name="레더자켓")
-    outer_list6 = Clothing_outer.objects.get(name="트렌치코트")    
-    outer_list7 = Clothing_outer.objects.get(name="블레이저")
-    outer_list8 = Clothing_outer.objects.get(name="후드집업")    
-    outer_list9 = Clothing_outer.objects.get(name="가디건")   
-    etc_list1 = Clothing_etc.objects.get(name="장갑")
-    etc_list2 = Clothing_etc.objects.get(name="목도리")
-    etc_list3 = Clothing_etc.objects.get(name="캡모자")
-    etc_list4 = Clothing_etc.objects.get(name="비니")
-    etc_list5 = Clothing_etc.objects.get(name="버킷햇")
-    bottom_list1= Clothing_bottom.objects.get(name="청바지")
-    bottom_list2 = Clothing_bottom.objects.get(name="면바지")
-    bottom_list3 = Clothing_bottom.objects.get(name="슬랙스")
-    bottom_list4 = Clothing_bottom.objects.get(name="레깅스")
-    bottom_list5 = Clothing_bottom.objects.get(name="스커트")
-    bottom_list6 = Clothing_bottom.objects.get(name="원피스")
-    bottom_list7 = Clothing_bottom.objects.get(name="반바지")
-    context = {'top_list1': top_list1,
-               'top_list2': top_list2,
-               'top_list3': top_list3,
-               'top_list4': top_list4,
-               'top_list5': top_list5,
-               'top_list6': top_list6,
-               'top_list7': top_list7,
-               'top_list8': top_list8,
-               'outer_list': outer_list,
-               'outer_list1': outer_list1,
-               'outer_list2': outer_list2,
-               'outer_list3': outer_list3,
-               'outer_list4': outer_list4,
-               'outer_list5': outer_list5,
-               'outer_list6': outer_list6,
-               'outer_list7': outer_list7,
-               'outer_list8': outer_list8,
-               'outer_list9': outer_list9,
-               'etc_list1': etc_list1,
-               'etc_list2': etc_list2,
-               'etc_list3': etc_list3,
-               'etc_list4': etc_list4,
-               'etc_list5': etc_list5, 
-               'bottom_list1': bottom_list1,
-                'bottom_list2': bottom_list2,
-                'bottom_list3': bottom_list3,
-                'bottom_list4': bottom_list4,
-                'bottom_list5': bottom_list5,
-                'bottom_list6': bottom_list6,
-                'bottom_list7': bottom_list7}
-    return render(request, 'pagetwo.html', context)
-
-
-
-
-
-
-
-@login_required(login_url='common:login') 
-def record_post_bak(req):
-    user = get_object_or_404(TempestUser, pk=req.user.id)
-    print(f'debug: 사용자: {user}')
-    form = RecordForm(req.POST)
-    if req.method == 'POST':
-        if form.is_valid():
-            record = form.save(commit=False)
-            record.user = user
-            record.weather = Weather.objects.latest('date')
-            print(f'debug: record = {record}')
-            record.save()
-            return redirect('tempest:recorded') # 기록 작성 후 리디렉션
-        else: 
-            context = {'record':RecordForm()}
-            print(f'debug: form failed!!!!  1')
-            print(f'debug: form = {form.cleaned_data}')
-            for i in form.cleaned_data:
-                print(i)
-            return render(req, 'pagetwo.html', context)
-    else:
-        # form = AnswerForm() # 이 경우도 GET 메서드로 요청됨, 그러나 content 필드가 not None이라는 조건이 있으므로 처리되지 않음. 
-        print(f'debug: form failed!!!!   2')
-        return HttpResponseNotAllowed("POST 방식의 요청만 가능합니다.") # 명시적으로 POST 방식 이외의 처리를 거부함. 
-    
+# json 형식으로 옷 기록을 처리하는 view 함수
 @login_required(login_url='common:login') 
 def record_post(req):
     user = get_object_or_404(TempestUser, pk=req.user.id)
     print(f'debug: 사용자: {user}')
     form = RecordForm()
     if req.method == 'POST':
+        # 먼저 상의와 하의 정보가 들어왔는지 체크
+        print(f'debug@record_post: \n\t req.POST.keys(): \n\t\t {req.POST.keys()}')
+
+        top_check = False
+        bottom_check = False
+
+        for key in req.POST.keys():
+            if 'top' in key: top_check = True
+            elif 'bottom' in key: bottom_check = True
+        print(f'debug==1 {str(top_check)}')
+        print(f'debug==2 {str(bottom_check)}')
+        print('debug==', str((top_check is True) and (bottom_check is True)))
+        if (top_check and bottom_check):
+            print(f'debug@record_post - checked: {top_check}, {bottom_check}')
+            pass
+        else:
+            print(f'debug@record_post - entered else')
+            context = {
+                "outer": [x.name for x in Clothing_outer.objects.filter()],
+                "top": [x.name for x in Clothing_top.objects.filter()],
+                "bottom":[x.name for x in Clothing_bottom.objects.filter()],
+                "etc":[x.name for x in Clothing_etc.objects.filter()],
+                'error': {
+                    'top': not top_check,
+                    'bottom': not bottom_check
+                }
+            }
+            print(f'debug@record_post - context: \n {context["error"]}')
+            return render(req, 'pagetwo.html', context)
+        
+        # 체크 했으면 필요한 정보만 담는다. 
+        clothes_data = {
+            'outer':[],
+            'top':[],
+            'bottom':[],
+            'etc':[]
+            }
+        
+        for key in req.POST.keys():
+            if 'outer' in key:
+                clothes_data['outer'].append(req.POST[key])
+            elif 'top' in key:
+                clothes_data['top'].append(req.POST[key])
+            if 'bottom' in key:
+                clothes_data['bottom'].append(req.POST[key])
+            if 'etc' in key:
+                clothes_data['etc'].append(req.POST[key])
+        
         record = form.save(commit=False)
         record.user = user
         record.weather = Weather.objects.latest('date')
-        record.clothes = req.POST
-        print(f'debug: @record_post2 record = {record}')
+        record.clothes = clothes_data
+        print(f'debug: @record_post \n\trecord = {record}')
         record.save()
         return redirect('tempest:recorded') # 기록 작성 후 리디렉션
     else:
@@ -176,10 +135,18 @@ def record_post(req):
 @login_required(login_url='common:login') 
 def recorded(req):
     filterlist = ClotheRecords.objects.filter(user=req.user)
+    print(f'debug: @recorded  {filterlist}')
     record = filterlist.latest('id')
-    print(f'debug: @recorded  {record}')
+    print(f'debug: @recorded - all objects: {filterlist}')
+    print(f'debug: @recorded - a single record: {record}')
     context = {'record': record}
     return render(req, 'tempest/recorded.html', context)
+
+
+
+
+
+
 
 
 
