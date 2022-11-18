@@ -22,7 +22,7 @@ def index(req):
     sky = weather_json['시간별 예보'][get_time()]['SKY']
     icon =''
     
-    print(f'debug {pty}:{type(pty)}, {sky}:{type(sky)}')
+    #print(f'debug@index {pty}:{type(pty)}, {sky}:{type(sky)}')
     
     # icon 결정 메커니즘 
     if pty=='0': # 강수 상태가 0(안 옴)일 때의 ico 결정 if문
@@ -92,7 +92,7 @@ def record_form(req):
                'etc': etc_ls,
                }
 
-    print(f'debug@record_form {context}')
+    #print(f'debug@record_form {context}')
     return render(req, 'pagetwo.html', context)
 
 
@@ -100,7 +100,7 @@ def record_form(req):
 @login_required(login_url='common:login') 
 def record_post(req):
     user = get_object_or_404(TempestUser, pk=req.user.id)
-    print(f'debug: 사용자: {user}')
+    #print(f'debug: 사용자: {user}')
     form = RecordForm()
     if req.method == 'POST':
         # 먼저 상의와 하의 정보가 들어왔는지 체크
@@ -112,9 +112,9 @@ def record_post(req):
         for key in req.POST.keys():
             if 'top' in key: top_check = True
             elif 'bottom' in key: bottom_check = True
-        print(f'debug==1 {str(top_check)}')
-        print(f'debug==2 {str(bottom_check)}')
-        print('debug==', str((top_check is True) and (bottom_check is True)))
+        #print(f'debug==1 {str(top_check)}')
+        #print(f'debug==2 {str(bottom_check)}')
+        #print('debug==', str((top_check is True) and (bottom_check is True)))
         if (top_check and bottom_check):
             #print(f'debug@record_post - checked: {top_check}, {bottom_check}')
             pass
@@ -130,7 +130,7 @@ def record_post(req):
                     'bottom': not bottom_check
                 }
             }
-            print(f'debug@record_post - context: \n {context["error"]}')
+            #print(f'debug@record_post - context: \n {context["error"]}')
             return render(req, 'pagetwo.html', context)
         
         # 체크 했으면 필요한 정보만 담는다. 
@@ -160,7 +160,7 @@ def record_post(req):
         return redirect('tempest:recorded') # 기록 작성 후 리디렉션
     else:
         # form = AnswerForm() # 이 경우도 GET 메서드로 요청됨, 그러나 content 필드가 not None이라는 조건이 있으므로 처리되지 않음. 
-        print(f'debug: requested without POST')
+        #print(f'debug: requested without POST')
         return HttpResponseNotAllowed("POST 방식의 요청만 가능합니다.") # 명시적으로 POST 방식 이외의 처리를 거부함. 
 
 
@@ -184,26 +184,26 @@ def recorded(req):
     etc_records = {} 
     
     for category, user_clothings in record.clothes.items():
-        print(f'debug: {category}: {user_clothings}')
+        #print(f'debug: {category}: {user_clothings}')
         
         for elem in user_clothings:
             for outer in outer_ls:
-                if elem in outer.name:
+                if elem == outer.name:
                     outer_records.update({elem: { 'name': elem,
                                             'cat': '아우터', 
                                            'img_path': outer.img_path}})
             for top in top_ls:
-                if elem in top.name:
+                if elem == top.name:
                     top_records.update({elem: {'name': elem,
                                            'cat': '상의', 
                                            'img_path': top.img_path}})
             for bottom in bottom_ls:
-                if elem in bottom.name:
+                if elem == bottom.name:
                     bottom_records.update({elem: {'name': elem,
                                            'cat': '하의', 
                                            'img_path': bottom.img_path} })
             for etc in etc_ls:
-                if elem in etc.name:
+                if elem == etc.name:
                     etc_records.update({elem: {'name': elem,
                                            'cat': '액세서리', 
                                            'img_path': etc.img_path}})
@@ -213,7 +213,7 @@ def recorded(req):
                'bottom_records': bottom_records,
                'etc_records': etc_records,
                }
-    print(f'debug: @recorded - five records: {context}')
+    #print(f'debug: @recorded - five records: {context}')
     
     return render(req, 'tempest/recorded.html', context)
 
