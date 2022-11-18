@@ -15,12 +15,12 @@
 </head>
 <body>
     <div class="container">
-        <div class="row">
+        <div class="row" >
             <!--<div class="container-fluid my-2 h-100 d-flex justify-content-center">-->
                 <!-- 아우터 -->
                 <div class="col-md-3" style="margin-bottom:2%;" >
-                    {% for k, record in outer_records.items %}
-                    <div class="card custom-control image-checkbox custom-checkbox" style="margin-bottom:3%;">
+                    {% for k, record in outer_records.items %}  <!-- 투명도는 style의 rgba 속성 마지막 a('alpha') -->
+                    <div class="card custom-control image-checkbox custom-checkbox" style="margin-bottom:3%; background-color: rgba(245, 245, 245, 0.5);">
                         <div class="card-header">
                             {{record.cat}} 
                         </div>
@@ -35,7 +35,7 @@
                 <!-- 상의 -->
                 <div class="col-md-3" style="margin-bottom:2%;">
                     {% for k, record in top_records.items %}
-                    <div class="card custom-control image-checkbox custom-checkbox", style="margin-bottom:2%;">
+                    <div class="card custom-control image-checkbox custom-checkbox", style="margin-bottom:3%; background-color: rgba(245, 245, 245, 0.5);">
                         <div class="card-header">
                             {{record.cat}} 
                         </div>
@@ -50,7 +50,7 @@
                 <!-- 하의 -->
                 <div class="col-md-3" style="margin-bottom:2%;">
                     {% for k, record in bottom_records.items %}
-                    <div class="card custom-control image-checkbox custom-checkbox", style="margin-bottom:2%;">
+                    <div class="card custom-control image-checkbox custom-checkbox", style="margin-bottom:3%; background-color: rgba(245, 245, 245, 0.5);">
                         <div class="card-header">
                             {{record.cat}} 
                         </div>
@@ -65,7 +65,7 @@
                 <!-- etc -->
                 <div class="col-md-3" style="margin-bottom:2%;">
                     {% for k, record in etc_records.items %}
-                    <div class="card custom-control image-checkbox custom-checkbox", style="margin-bottom:2%;">
+                    <div class="card custom-control image-checkbox custom-checkbox", style="margin-bottom:3%; background-color: rgba(245, 245, 245, 0.5);">
                         <div class="card-header">
                             {{record.cat}} 
                         </div>
