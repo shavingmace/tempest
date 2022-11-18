@@ -15,14 +15,14 @@
         <!-- 아우터~ -->
         <h4 style="text-align:center; margin-bottom:2%;"><b>아우터</b></h4>
         <div class="row" style="justify-content: ; flex-direction: row;">
-            {% for clothes in outer %}
+            {% for k, v in outer.items %}
             <div class="col-md-4" style="margin-bottom:2%;">
                 <div class="card custom-control custom-checkbox image-checkbox">
                     <input type="checkbox" class="custom-control-input" id="outer_{{ forloop.counter0 }}" 
-                        name="outer_{{ forloop.counter0 }}" value="{{ clothes }}">
+                        name="outer_{{ forloop.counter0 }}" value="{{ k }}">
                     <label class="custom-control-label" for="outer_{{ forloop.counter0 }}">
-                        <img src="img/annie-spratt.jpg" alt="#" class="img-fluid">
-                        <div class='card-body'><p class='card-text' style='text-align:center'><b>{{ clothes }}</b></p></div>
+                        <img src={{ v.img_path }} alt="#" class="img-fluid">
+                        <div class='card-body'><p class='card-text' style='text-align:center'><b>{{ k }}</b></p></div>
                     </label>
                 </div>
             </div>
@@ -30,21 +30,21 @@
         </div>
         <br><br>
         
+
+        <!-- 상의~ -->
         {% if error.top %}
         <div class="alert alert-danger">상의를 하나 이상 선택하세요</div>
         {% endif %}
-
-        <!-- 상의~ -->
         <h4 style="text-align:center; margin-bottom:2%;"><b>상의</b></h4>
         <div class="row" style="justify-content: ; flex-direction: row;">
-            {% for clothes in top %}
+            {% for k, v in top.items %}
             <div class="col-md-4" style="margin-bottom:2%;">
                 <div class="card custom-control custom-checkbox image-checkbox">
                     <input type="checkbox" class="custom-control-input" id="top_{{ forloop.counter0 }}" 
-                        name="top_{{ forloop.counter0 }}" value="{{ clothes }}">
+                        name="top_{{ forloop.counter0 }}" value="{{ k }}">
                     <label class="custom-control-label" for="top_{{ forloop.counter0 }}">
-                        <img src="img/annie-spratt.jpg" alt="#" class="img-fluid">
-                        <div class='card-body'><p class='card-text' style='text-align:center'><b>{{ clothes }}</b></p></div>
+                        <img src="{{ v.img_path }}" alt="#" class="img-fluid">
+                        <div class='card-body'><p class='card-text' style='text-align:center'><b>{{ k }}</b></p></div>
                     </label>
                 </div>
             </div>
@@ -52,21 +52,20 @@
         </div>
 
         
-
+        <!-- 하의~ -->
         {% if error.bottom %}
         <div class="alert alert-danger">하의를 하나 이상 선택하세요</div>
         {% endif %}
-        <!-- 하의~ -->
         <h4 style="text-align:center; margin-bottom:2%;"><b>하의</b></h4>
         <div class="row" style="justify-content: ; flex-direction: row;">
-            {% for clothes in bottom %}
+            {% for k, v in bottom.items %}
             <div class="col-md-4" style="margin-bottom:2%;">
                 <div class="card custom-control custom-checkbox image-checkbox">
                     <input type="checkbox" class="custom-control-input" id="bottom_{{ forloop.counter0 }}" 
-                        name="bottom_{{ forloop.counter0 }}" value="{{ clothes }}">
+                        name="bottom_{{ forloop.counter0 }}" value="{{ k }}">
                     <label class="custom-control-label" for="bottom_{{ forloop.counter0 }}">
-                        <img src="img/annie-spratt.jpg" alt="#" class="img-fluid">
-                        <div class='card-body'><p class='card-text' style='text-align:center'><b>{{ clothes }}</b></p></div>
+                        <img src="{{ v.img_path }}" alt="#" class="img-fluid">
+                        <div class='card-body'><p class='card-text' style='text-align:center'><b>{{ k }}</b></p></div>
                     </label>
                 </div>
             </div>
@@ -76,14 +75,14 @@
         <!-- 액세서리~ -->
         <h4 style="text-align:center; margin-bottom:2%;"><b>액세서리</b></h4>
         <div class="row" style="justify-content: ; flex-direction: row;">
-            {% for clothes in etc %}
+            {% for k, v in etc.items %}
             <div class="col-md-4" style="margin-bottom:2%;">
                 <div class="card custom-control custom-checkbox image-checkbox">
                     <input type="checkbox" class="custom-control-input" id="etc_{{ forloop.counter0 }}" 
-                        name="etc_{{ forloop.counter0 }}" value="{{ clothes }}">
+                        name="etc_{{ forloop.counter0 }}" value="{{ k }}">
                     <label class="custom-control-label" for="etc_{{ forloop.counter0 }}">
-                        <img src="img/annie-spratt.jpg" alt="#" class="img-fluid">
-                        <div class='card-body'><p class='card-text' style='text-align:center'><b>{{ clothes }}</b></p></div>
+                        <img src="{{ v.img_path }}" alt="#" class="img-fluid">
+                        <div class='card-body'><p class='card-text' style='text-align:center'><b>{{ k }}</b></p></div>
                     </label>
                 </div>
             </div>

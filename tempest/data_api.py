@@ -93,7 +93,7 @@ def get_past_wthr_sum(date=get_date()): #기본 입력으로 오늘 날짜를 �
     return result
 
 # get short period weather의 단축어. 
-def get_sp_wthr(bt_unit=1, date=get_date()):
+def get_sp_wthr(bt_unit=1, date=get_date(), gps_loc=(55, 127)):
     """_summary_
         단기 기상 예보 데이터 호출 
     """
@@ -111,8 +111,8 @@ def get_sp_wthr(bt_unit=1, date=get_date()):
             'dataType': 'JSON', # 응답자료형식
             'base_date': date,  # 기반날짜
             'base_time': base_time[bt_unit],  # 기반 시간
-            'nx': 55, # 예보지점 x좌표, 문자열로 보낼 것!!!
-            'ny': 127 # 예보지점 y좌표
+            'nx': gps_loc[0], # 예보지점 x좌표
+            'ny': gps_loc[1] # 예보지점 y좌표
             }
     #print(f'debug: params: {params}')
     

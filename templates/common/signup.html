@@ -1,11 +1,32 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="container my-3">
+<link rel="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+<style>
+    @import url('https://fonts.googleapis.com/earlyaccess/hanna.css');
+    #font
+    {
+        background-color: rgba(255,255,255,.25);
+        width:450px;
+        height:600px;
+        padding-left: auto;
+        padding-right: auto;
+        padding-top: auto;
+        padding-bottom: auto;
+        padding-radius: 1%;
+        font-family: 'Hanna'; sans-serif;
+    }
+    #id_region{background: transparent;}
+    #id_gender{background: transparent;}
+    #id_age{background: transparent;}
+ </style>
+<div class="container my-3" id=font>
     <div class="row my-3">
         <div class="col-4">
-            <h4>회원가입</h4>
+            <br>
+            <h3>회원가입</h3>
         </div>
         <div class="col-8 text-right">
+            <br>
             <span> 
                 또는 <a href="{% url 'common:login' %}">로그인 하세요.</a>
             </span>
@@ -14,8 +35,64 @@
     <form method="post" class="post-form">
         {% csrf_token %}
         {% include "form_errors.html" %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">가입하기</button>
-    </form>
-</div>
+        <p><br>
+            <label for="id_username">사용자 이름</label>
+            <input type="text" name="username" maxlength="150" autofocus required id="id_username" 
+            style="background: transparent;">
+            <br>
+            <br>
+              <span class="helptext">150자 이하 문자, 숫자 그리고 @/./+/-/_만 가능합니다.</span>    
+          </p>  
+          <p>
+            <label for="id_region" >지역</label>
+            <select name="region" id="id_region">
+          <option value="1">강원도</option>
+          <option value="2">경기도</option>
+          <option value="3">경상남도</option>
+          <option value="4">경상북도</option>
+          <option value="5">전라남도</option>
+          <option value="6">전라북도</option>
+          <option value="7">제주도</option>
+          <option value="8">충청남도</option>
+          <option value="9">충청북도</option>
+        </select>    
+          </p>
+          <p>
+            <label for="id_gender">성별</label>
+            <select name="gender" id="id_gender">
+          <option value="1">여성</option>
+          <option value="2">남성</option>
+          <option value="3">논바이너리</option>
+          <option value="4">응답하지 않음</option>
+        </select>
+         </p>
+        <p>
+            <label for="id_age">나이</label>
+            <select name="age" id="id_age">
+          <option value="1">10대</option>
+          <option value="2">20대</option>
+          <option value="3">30대</option>
+          <option value="4">40대</option>
+          <option value="5">50대</option>
+          <option value="6">60대</option>
+          <option value="7">70대</option>
+          <option value="8">80대</option>
+        </select>
+         </p>
+          <p>
+            <label for="id_password1">비밀번호</label>
+            <input type="password" name="password1" required id="id_password1"
+            style="background: transparent;">
+          </p>
+        <p>
+            <label for="id_password2">비밀번호 확인</label>
+            <input type="password" name="password2" required id="id_password2" style="background: transparent;"><br>
+              <span class="helptext">같은 비밀번호를 입력하세요.</span>
+                <br>
+                <br>
+                <button type="submit" class="btn btn-outline-info btn-lg">가입하기</button>
+            </form>
+        </div>
+        </body>
+        </html>
 {% endblock %}

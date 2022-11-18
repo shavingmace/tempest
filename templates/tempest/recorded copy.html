@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- 내용 시작 6 offset-md-3 -->
+<div class="text-center my-3"><h2><b>오늘 당신의 옷장</b></h2></div>
+<div class="container-fluid my-2 h-100 d-flex justify-content-center align-items-center">
+    <div class="row" style="flex-direction: row; width: 50%; height: 50%;">
+        {% for name, img_path in records.items %}
+        <div class="col-md-4" style="margin-bottom:2%   ;">
+            <div class="card custom-control custom-checkbox image-checkbox" style="margin-bottom:1%;">
+                <div class="card"></div>
+                    <img src="{{ img_path }}" alt="#" class="img-fluid">
+                <div class='card-body'><p class='card-text' style='text-align:center'><b>{{ name }}</b></p></div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+
+<!-- 끝 -->
+{% endblock %}
