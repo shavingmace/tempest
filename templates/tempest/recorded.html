@@ -15,65 +15,68 @@
 </head>
 <body>
     <div class="container">
-        <div class="row align-items-start">
-            <div class="container-fluid my-2 h-100 d-flex justify-content-center">
-                <div class="col-3">
-                    <div class="card text-white bg-primary", margin:2px>
-                        {% for k, record in outer_records.items %}
+        <div class="row" >
+            <!--<div class="container-fluid my-2 h-100 d-flex justify-content-center">-->
+                <!-- 아우터 -->
+                <div class="col-md-3" style="margin-bottom:2%;" >
+                    {% for k, record in outer_records.items %}
+                    <div class="card custom-control image-checkbox custom-checkbox" style="margin-bottom:3%;">
                         <div class="card-header">
                             {{record.cat}} 
                         </div>
-                        <div class="card-body">
-                            <h5 class="card-title">{{record.name}}</h5>
-                            <br>
-                            <p class="card-text"><img src="{{ record.img_path }}" alt="#" class="img-fluid"></p>
-                        </div>
-                        {% endfor %}
+                        <label class="label">
+                            <img src="{{ record.img_path }}" alt="#" class="img-fluid">
+                            <div class="card-body"><p class="card-text"><h5>{{record.name}}</h5></p></div>
+                        </label>
                     </div>
+                    {% endfor %}
                 </div>
-                <div class="col-3">
-                    <div class="card text-white bg-primary", margin:2px>
-                        {% for k, record in top_records.items %}
+                
+                <!-- 상의 -->
+                <div class="col-md-3" style="margin-bottom:2%;">
+                    {% for k, record in top_records.items %}
+                    <div class="card custom-control image-checkbox custom-checkbox", style="margin-bottom:2%;">
                         <div class="card-header">
                             {{record.cat}} 
                         </div>
-                        <div class="card-body">
-                            <h5 class="card-title">{{record.name}}</h5>
-                            <br>
-                            <p class="card-text"><img src="{{ record.img_path }}" alt="#" class="img-fluid"></p>
-                        </div>
-                        {% endfor %}
+                        <label class="label">
+                            <img src="{{ record.img_path }}" alt="#" class="img-fluid">
+                            <div class="card-body"><p class="card-text"><h5>{{record.name}}</h5></p></div>
+                        </label>
                     </div>
+                    {% endfor %}
                 </div>
-                <div class="col-3">
-                    <div class="card text-white bg-primary", margin:2px>
-                        {% for k, record in bottom_records.items %}
+
+                <!-- 하의 -->
+                <div class="col-md-3" style="margin-bottom:2%;">
+                    {% for k, record in bottom_records.items %}
+                    <div class="card custom-control image-checkbox custom-checkbox", style="margin-bottom:2%;">
                         <div class="card-header">
                             {{record.cat}} 
                         </div>
-                        <div class="card-body">
-                            <h5 class="card-title">{{record.name}}</h5>
-                            <br>
-                            <p class="card-text"><img src="{{ record.img_path }}" alt="#" class="img-fluid"></p>
-                        </div>
-                        {% endfor %}
+                        <label class="label">
+                            <img src="{{ record.img_path }}" alt="#" class="img-fluid">
+                            <div class="card-body"><p class="card-text"><h5>{{record.name}}</h5></p></div>
+                        </label>
                     </div>
+                    {% endfor %}
                 </div>
-                <div class="col-3">
-                    <div class="card text-white bg-primary", margin:2px>
-                        {% for k, record in etc_records.items %}
+
+                <!-- etc -->
+                <div class="col-md-3" style="margin-bottom:2%;">
+                    {% for k, record in etc_records.items %}
+                    <div class="card custom-control image-checkbox custom-checkbox", style="margin-bottom:2%;">
                         <div class="card-header">
                             {{record.cat}} 
                         </div>
-                        <div class="card-body">
-                            <h5 class="card-title">{{record.name}}</h5>
-                            <br>
-                            <p class="card-text"><img src="{{ record.img_path }}" alt="#" class="img-fluid"></p>
-                        </div>
-                        {% endfor %}
+                        <label class="label">
+                            <img src="{{ record.img_path }}" alt="#" class="img-fluid">
+                            <div class="card-body"><p class="card-text"><h5>{{record.name}}</h5></p></div>
+                        </label>
                     </div>
+                    {% endfor %}
                 </div>
-            </div>
+            <!--</div>-->
         </div>
     </div>
 <!-- 끝 -->
