@@ -1,6 +1,19 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+<head>
+    <style>
+        <!-- hover -->
+           .hover11 figure img {
+               opacity: 1;
+               -webkit-transition: .3s ease-in-out;
+               transition: .3s ease-in-out;
+             }
+             .hover11 figure:hover img {
+               opacity: .5;
+             }
+    </style>
+</head>
 <div class="container my-3">
     <div class="row my-3">
         <img src="{%static 'tempest/images/products.png' %}" width=48px, height=48px;>
